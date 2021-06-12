@@ -1,0 +1,19 @@
+{
+  "token":"abcd",
+  "spoonacularApiKey":"abcd",
+  "authorizedRoleID":12345,
+  "guildID":12345,
+  "goodnightConfig":{
+    "compoundModifierList": [
+      "filled",
+      "free",
+      "packed",
+      "jammed",
+      "induced",
+      "charged",
+      "infused"]
+  },
+  "quoteConfig":{
+    "quotes":[]
+  }
+}
