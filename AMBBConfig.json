@@ -1,1 +1,22 @@
-{"token":"ODQ5OTMwOTg0MDU2MDI5MjE1.YLiV6Q.W94n1VUZ4_Yuax0H3pAU8GxFvf4","spoonacularApiKey":"97f504075c1942909c5bf8c86cdd2954","authorizedRoleID":849943343861465120,"guildID":849941053373153280,"goodnightConfig":{"compoundModifierList":["filled","free","packed","jammed","induced","charged","infused"]},"quoteConfig":{"quotes":["\"Honestly, Fuck Jason\" - Woodmaninator, 2021","\"Every time I laugh a baby gets aborted\" - pr0tal, 2021 ","\"key boa rd i s br oke n\" - inflame, 2021 "]}}
+{
+  "token":"ODQ5OTMwOTg0MDU2MDI5MjE1.YLiV6Q.W94n1VUZ4_Yuax0H3pAU8GxFvf4",
+  "spoonacularApiKey":"97f504075c1942909c5bf8c86cdd2954",
+  "authorizedRoleID":12345,
+  "guildID":12345,
+  "goodnightConfig": {
+    "compoundModifierList":[
+      "filled",
+      "free",
+      "packed",
+      "jammed",
+      "induced",
+      "charged",
+      "infused"]
+  },
+  "quoteConfig": {
+    "quotes": [
+    "\"Honestly, Fuck Jason\" - Woodmaninator, 2021",
+    "\"Every time I laugh a baby gets aborted\" - pr0tal, 2021 ",
+    "\"key boa rd i s br oke n\" - inflame, 2021 "]
+  }
+}
