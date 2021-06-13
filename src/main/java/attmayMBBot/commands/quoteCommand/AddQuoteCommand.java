@@ -25,6 +25,7 @@ public class AddQuoteCommand implements ICommand {
                     sb.append(args[i]).append(" ");
                 this.config.getQuoteConfig().getQuotes().add(sb.toString());
                 this.config.saveConfigToFile();
+                message.getChannel().block().createMessage("Quote successfully added").block();
             } else
                 message.getChannel().block().createMessage("This command feels incomplete.\nUse !addquote [Quote] instead").block();
         } else
