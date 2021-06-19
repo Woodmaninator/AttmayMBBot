@@ -7,6 +7,7 @@ import attmayMBBot.commands.goodnightCommand.GoodnightCommand;
 import attmayMBBot.commands.jokeCommand.JokeCommand;
 import attmayMBBot.commands.quoteCommand.AddQuoteCommand;
 import attmayMBBot.commands.quoteCommand.RandomQuoteCommand;
+import attmayMBBot.commands.uwuCommand.UwUCommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import discord4j.core.object.entity.Message;
 
@@ -24,6 +25,7 @@ public class CommandInterpreter {
         this.commandMap.put("!quote", new RandomQuoteCommand(this.config));
         this.commandMap.put("!joke", new JokeCommand(this.config));
         this.commandMap.put("!dinnerpost", new DinnerpostCommand(this.config));
+        this.commandMap.put("!uwu", new UwUCommand(this.config));
         this.notFoundCommand = new NotFoundCommand();
     }
     public void interpretCommand(Message message){
