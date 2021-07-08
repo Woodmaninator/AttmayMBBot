@@ -13,13 +13,23 @@ public class SpoonacularAPIHandler {
         this.config = config;
     }
     public Recipe getRandomRecipe(){
+        return getRandomRecipe("");
+    }
+    public Recipe getRandomRecipe(String tag){
         String url = "https://api.spoonacular.com/recipes/random?apiKey=" + this.config.getSpoonacularApiKey() + "&limitLicense=true&number=1";
-        JsonObject jsonObject = new Gson().fromJson(new HttpConnectionHandler().get(url),JsonObject.class);
-        return new Recipe(
-                jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("title").getAsString(),
-                jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("image").getAsString(),
-                jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("summary").getAsString(),
-                jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("sourceUrl").getAsString()
-        );
+        if (!tag.equals(""))
+            url = url + "&tags=" + tag;
+        try {
+            JsonObject jsonObject = new Gson().fromJson(new HttpConnectionHandler().get(url), JsonObject.class);
+            return new Recipe(
+                    jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("title").getAsString(),
+                    jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("image").getAsString(),
+                    jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("summary").getAsString(),
+                    jsonObject.get("recipes").getAsJsonArray().get(0).getAsJsonObject().get("sourceUrl").getAsString()
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

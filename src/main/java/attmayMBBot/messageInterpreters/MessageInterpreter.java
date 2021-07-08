@@ -30,7 +30,7 @@ public class MessageInterpreter {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                message.getChannel().block().createMessage("Whoops, something went wrong. Better ignore this runtime exception.\n" + ex.getStackTrace().toString()).block();
+                message.getChannel().block().createMessage("Whoops, something went wrong. Better ignore this runtime exception.\n" + ex.getMessage()).block();
             }
         }
     }
