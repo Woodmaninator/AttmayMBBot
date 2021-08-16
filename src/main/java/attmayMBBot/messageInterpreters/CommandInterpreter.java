@@ -6,6 +6,7 @@ import attmayMBBot.commands.dinnerpostCommand.DinnerpostCommand;
 import attmayMBBot.commands.goodnightCommand.GoodnightCommand;
 import attmayMBBot.commands.jokeCommand.JokeCommand;
 import attmayMBBot.commands.quoteCommand.AddQuoteCommand;
+import attmayMBBot.commands.quoteCommand.AllQuotesCommand;
 import attmayMBBot.commands.quoteCommand.RandomQuoteCommand;
 import attmayMBBot.commands.uwuCommand.UwUCommand;
 import attmayMBBot.config.AttmayMBBotConfig;
@@ -22,6 +23,7 @@ public class CommandInterpreter {
         this.commandMap = new HashMap<String, ICommand>();
         this.commandMap.put("!goodnight", new GoodnightCommand(this.config));
         this.commandMap.put("!addquote", new AddQuoteCommand(this.config));
+        this.commandMap.put("!quotelist", new AllQuotesCommand(this.config));
         this.commandMap.put("!quote", new RandomQuoteCommand(this.config));
         this.commandMap.put("!joke", new JokeCommand(this.config));
         this.commandMap.put("!dinnerpost", new DinnerpostCommand(this.config));
