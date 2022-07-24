@@ -1,17 +1,21 @@
 package attmayMBBot.messageInterpreters;
 
 import attmayMBBot.config.AttmayMBBotConfig;
+import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
+import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.messageInterpreters.messageTextInterpreters.IMessageTextInterpreter;
 import attmayMBBot.messageInterpreters.messageTextInterpreters.MessageTextInterpreter;
 import discord4j.core.object.entity.Message;
 
 public class MessageInterpreter {
     private AttmayMBBotConfig config;
+    private QuoteManager quoteManager;
     private CommandInterpreter commandInterpreter;
     private IMessageTextInterpreter messageTextInterpreter;
-    public MessageInterpreter(AttmayMBBotConfig config){
+    public MessageInterpreter(AttmayMBBotConfig config, QuoteManager quoteManager){
         this.config = config;
-        this.commandInterpreter = new CommandInterpreter(config);
+        this.quoteManager = quoteManager;
+        this.commandInterpreter = new CommandInterpreter(config, quoteManager, new QuoteIDManager(quoteManager.getQuoteAuthors()));
         this.messageTextInterpreter = new MessageTextInterpreter(config);
     }
     public void interpretMessage(Message message) {

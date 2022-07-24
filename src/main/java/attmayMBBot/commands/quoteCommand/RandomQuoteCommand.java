@@ -2,22 +2,29 @@ package attmayMBBot.commands.quoteCommand;
 
 import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
+import attmayMBBot.functionalities.quoteManagement.Quote;
+import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.Message;
+import javafx.util.Pair;
 
+import java.util.List;
 import java.util.Random;
 
 public class RandomQuoteCommand implements ICommand {
     private AttmayMBBotConfig config;
+    private QuoteManager quoteManager;
 
-    public RandomQuoteCommand(AttmayMBBotConfig config) {
+    public RandomQuoteCommand(AttmayMBBotConfig config, QuoteManager quoteManager) {
         this.config = config;
+        this.quoteManager = quoteManager;
     }
 
     @Override
     public void execute(Message message, String[] args) {
-        //This is way too short
-        //No way this is gonna work
+        //Smooth operator
+        List<Pair<String, Quote>> quotePairs = this.quoteManager.getAllQuotesSortedByIssuedDate();
         Random random = new Random();
-        message.getChannel().block().createMessage(this.config.getQuoteConfig().getQuotes().get(random.nextInt(this.config.getQuoteConfig().getQuotes().size()))).block();
+        Pair<String, Quote> randomPair = quotePairs.get(random.nextInt(quotePairs.size()));
+        message.getChannel().block().createMessage(randomPair.getValue().getQuoteText() + " - " + randomPair.getKey() + ", " + randomPair.getValue().getQuoteYear()).block();
     }
 }

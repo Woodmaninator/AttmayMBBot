@@ -11,7 +11,6 @@ public class AttmayMBBotConfig {
     private long authorizedRoleID;
     private long guildID;
     private AMBBGoodnightConfig goodnightConfig;
-    private AMBBQuoteConfig quoteConfig;
 
     public String getToken(){
         return this.token;
@@ -28,7 +27,6 @@ public class AttmayMBBotConfig {
     public AMBBGoodnightConfig getGoodnightConfig(){
         return this.goodnightConfig;
     }
-    public AMBBQuoteConfig getQuoteConfig(){ return this.quoteConfig; }
 
     public void saveConfigToFile(){
         String path = "AMBBConfig.json";

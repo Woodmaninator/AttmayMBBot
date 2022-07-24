@@ -1,6 +1,7 @@
 package attmayMBBot;
 
 import attmayMBBot.config.AttmayMBBotConfig;
+import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.messageInterpreters.MessageInterpreter;
 import com.google.gson.Gson;
 import discord4j.core.DiscordClient;
@@ -16,17 +17,20 @@ public class AttmayMBBotMain {
             Reader reader = new FileReader("AMBBConfig.json");
             AttmayMBBotConfig config = new Gson().fromJson(reader, AttmayMBBotConfig.class);
             reader.close();
-            startBot(config);
+            reader = new FileReader("AMBBQuotes.json");
+            QuoteManager quoteManager = new Gson().fromJson(reader, QuoteManager.class);
+            reader.close();
+            startBot(config, quoteManager);
         } catch(Exception ex){
             System.out.println("Something went terribly wrong when trying to read the config/start up the bot. You should get that fixed asap.");
             ex.printStackTrace();
         }
     }
-    public static void startBot(AttmayMBBotConfig config){
+    public static void startBot(AttmayMBBotConfig config, QuoteManager quoteManager){
         final DiscordClient client = DiscordClient.create(config.getToken());
         final GatewayDiscordClient gateway = client.login().block();
 
-        MessageInterpreter messageInterpreter = new MessageInterpreter(config);
+        MessageInterpreter messageInterpreter = new MessageInterpreter(config, quoteManager);
 
         //Event gets fired when the bot receives a message (private or in a text channel)
         gateway.on(MessageCreateEvent.class).subscribe(event -> {

@@ -11,7 +11,9 @@ Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\messageInterpreters\MessageInt
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\commands\jokeCommand\JokeCommand.java
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\config\AttmayMBBotConfig.java
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\AddQuoteCommand.java
+Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\functionalities\UwUifyer.java
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\util\WordObject.java
+Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\commands\uwuCommand\UwUCommand.java
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\config\AMBBGoodnightConfig.java
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\util\EWordType.java
 Y:\Projects\attmayMBBot\src\main\java\attmayMBBot\util\EWordQueryMode.java

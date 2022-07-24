@@ -1,0 +1,64 @@
+-------------Quote Rework--------------
+
+-------------Things that wood be needed 100%--------------
+
+Remove the racism option
+
+Quote Structure:
+    - Quote ID
+    - Quote Year
+    - Quote Text
+    - Quote Author
+    - Quote Issuer (Discord ID/Discord Username)
+    - Date the quote was issued on/TimeStamp for ordering
+
+Quote Author Structure:
+    - Discord ID
+    - Name (this is not the discord name; the name stored for the quoted person);
+    - List of Aliases (Just a list of more names this person is referred to as; this way it's possible to have multiple names for the same person)
+
+When adding quotes or anything: ignore upper/lower case
+
+Adding a quote:
+    !addquote [Authorname or any alias for that author] [Year] [QuoteText]
+        Example: !addquote inflame 2018 "This is a quote"
+        Some quotes involving 2 ppl have to be slightly reworked. But these are an exception so I do not care.
+        Authorized User only!
+
+    !quotelist
+        Example: !quotelist
+        This will list all the quotes that are currently in the database. The list will be ordered by the date they were added.
+        This command has a 1% chance to print the lyrics for Dream - Mask instead of the quote list.
+
+    !quoteList [Authorname or any alias for that author]
+        Example: !quoteList "John Doe"
+        This will list all the quotes that are currently in the database for the author. The list will be ordered by the date they were added.
+
+    !quote
+        Example: !quote
+        This will print a random quote from the database.
+
+    !addAuthor [Authorname] [DiscordID]
+        Example: !addAuthor "John Doe" "123456789"
+        This will add an author to the database.
+        Authorized User only!
+
+    !addAlias [Authorname] [Alias]
+        Example: !addAlias "John Doe" "John"
+        This will add an alias to the author.
+        If the Alias already exists somewhere, it will not be added.
+        Authorized User only!
+
+-------------Things that wood be cool to use but not 100% necessary--------------
+
+Whose quote is this?
+    !quoteQuiz
+    The bot will print a random quote and ask the user to guess who said it. There should be 4 options to choose from (with reactions).
+    Only the user that issued the command will be able to answer. (at least only this one will count)
+    The bot will answer whether the guess was right/wrong. If the user does not guess within 5 minutes, the bot will give away the answer and the quiz will be over.
+
+-------------Things that wood be nice but are just an addition to the basic functionalities--------------
+
+Being able to delete quotes/authors/aliases
+
+maybe even being able to edit quotes?
