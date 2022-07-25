@@ -3,6 +3,7 @@ package attmayMBBot.messageInterpreters;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
+import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import attmayMBBot.messageInterpreters.messageTextInterpreters.IMessageTextInterpreter;
 import attmayMBBot.messageInterpreters.messageTextInterpreters.MessageTextInterpreter;
 import discord4j.core.object.entity.Message;
@@ -10,12 +11,14 @@ import discord4j.core.object.entity.Message;
 public class MessageInterpreter {
     private AttmayMBBotConfig config;
     private QuoteManager quoteManager;
+    private QuoteQuizManager quoteQuizManager;
     private CommandInterpreter commandInterpreter;
     private IMessageTextInterpreter messageTextInterpreter;
-    public MessageInterpreter(AttmayMBBotConfig config, QuoteManager quoteManager){
+    public MessageInterpreter(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteQuizManager quoteQuizManager){
         this.config = config;
         this.quoteManager = quoteManager;
-        this.commandInterpreter = new CommandInterpreter(config, quoteManager, new QuoteIDManager(quoteManager.getQuoteAuthors()));
+        this.quoteQuizManager = quoteQuizManager;
+        this.commandInterpreter = new CommandInterpreter(config, quoteManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager);
         this.messageTextInterpreter = new MessageTextInterpreter(config);
     }
     public void interpretMessage(Message message) {
@@ -34,7 +37,7 @@ public class MessageInterpreter {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                message.getChannel().block().createMessage("Whoops, something went wrong. Better ignore this runtime exception.\n" + ex.getMessage()).block();
+                message.getChannel().block().createMessage("Whoops, something went wrong. Sorry about that.\n" + ex.getMessage()).block();
             }
         }
     }
