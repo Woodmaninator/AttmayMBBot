@@ -7,6 +7,7 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
 import discord4j.core.object.reaction.ReactionEmoji;
 
 import java.util.ArrayList;
@@ -23,10 +24,10 @@ public class ReactionInterpreter {
         this.addedReactionCommands.add(new AddQuoteQuizReactionCommand(config, quoteQuizManager));
     }
 
-    public void interpretAddedReaction(Member member, Message message, ReactionEmoji emoji){
+    public void interpretAddedReaction(User user, Message message, ReactionEmoji emoji){
         //This executes the execute method of ALL added reaction commands, because it is not possible to know which command should be executed just by looking at the emoji.
         for(IReactionCommand command : this.addedReactionCommands)
-            command.execute(member, message, emoji);
+            command.execute(user, message, emoji);
     }
 
     //Same principle for interpretRemovedReaction, but none of these exist yet

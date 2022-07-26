@@ -21,8 +21,8 @@ public class AddQuoteAuthorAliasCommand implements ICommand {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninantor built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(message.getAuthor().get())){
             if(args.length == 3){
-                String quoteAuthorName = args[2];
-                String newAlias = args[3];
+                String quoteAuthorName = args[1];
+                String newAlias = args[2];
 
                 if(this.quoteManager.checkIfQuoteAuthorNameExists(quoteAuthorName)){
                     //user exists, try to add the alias

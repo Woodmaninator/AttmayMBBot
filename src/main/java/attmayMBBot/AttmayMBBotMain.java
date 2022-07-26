@@ -46,7 +46,7 @@ public class AttmayMBBotMain {
 
         //Event gets fired when the bot receives a reaction (in a text channel)
         gateway.on(ReactionAddEvent.class).subscribe(event -> {
-            reactionInterpreter.interpretAddedReaction(event.getMember().get(), event.getMessage().block(), event.getEmoji());
+            reactionInterpreter.interpretAddedReaction(event.getUser().block(), event.getMessage().block(), event.getEmoji());
         });
 
         //Start the update loop for the quote quiz manager

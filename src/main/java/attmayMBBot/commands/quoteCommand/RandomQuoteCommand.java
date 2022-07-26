@@ -23,8 +23,11 @@ public class RandomQuoteCommand implements ICommand {
     public void execute(Message message, String[] args) {
         //Smooth operator
         List<Pair<String, Quote>> quotePairs = this.quoteManager.getAllQuotesSortedByIssuedDate();
-        Random random = new Random();
-        Pair<String, Quote> randomPair = quotePairs.get(random.nextInt(quotePairs.size()));
-        message.getChannel().block().createMessage(randomPair.getValue().getQuoteText() + " - " + randomPair.getKey() + ", " + randomPair.getValue().getQuoteYear()).block();
+        if(quotePairs.size() > 0) {
+            Random random = new Random();
+            Pair<String, Quote> randomPair = quotePairs.get(random.nextInt(quotePairs.size()));
+            message.getChannel().block().createMessage(randomPair.getValue().getQuoteText() + " - " + randomPair.getKey() + ", " + randomPair.getValue().getQuoteYear()).block();
+        } else
+            message.getChannel().block().createMessage("There are no quotes in the system yet.").block();
     }
 }

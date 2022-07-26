@@ -30,13 +30,25 @@ public class AddQuoteCommand implements ICommand {
                 //This code only gets executed if they actually pass a name/alias, a year and a quote
                 StringBuilder sb = new StringBuilder();
                 //argument number 4 is the first part of the actual quote
-                for(int i = 4; i < args.length; i++)
+                for(int i = 3; i < args.length; i++)
                     sb.append(args[i]).append(" ");
+                //remove the last space
+                if(sb.length() > 0)
+                    sb.deleteCharAt(sb.length() - 1);
 
                 //get the quote properties
                 Date nowDate = new Date();
-                String quoteAuthorName = args[2];
-                int quoteYear = Integer.parseInt(args[3]);
+                String quoteAuthorName = args[1];
+
+                //I'm too lazy to look for an equivalent method of TryParse in Java, so I'm just going to use a try/catch block
+                int quoteYear;
+                try {
+                    quoteYear = Integer.parseInt(args[2]);
+                } catch(Exception ex){
+                    message.getChannel().block().createMessage("The year is not a valid number!").block();
+                    return;
+                }
+
                 Long quoteId = this.quoteIDManager.getNextQuoteId();
                 String quoteText = sb.toString();
                 //make the new Quote object
@@ -50,7 +62,7 @@ public class AddQuoteCommand implements ICommand {
                     message.getChannel().block().createMessage("Quote successfully added").block();
                 } else {
                     //if it doesn't exist, print an error message
-                    message.getChannel().block().createMessage("Quote can not be added because that user is not known to AttmayMBBot!").block();
+                    message.getChannel().block().createMessage("Quote can not be added because that user is not known to attmayMBBot!").block();
                 }
             } else
                 message.getChannel().block().createMessage("This command feels incomplete.\nUse !addquote [Username/Alias] [Year] [QuoteText] instead").block();

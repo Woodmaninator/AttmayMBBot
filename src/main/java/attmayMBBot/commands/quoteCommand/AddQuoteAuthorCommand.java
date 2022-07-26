@@ -21,8 +21,8 @@ public class AddQuoteAuthorCommand implements ICommand {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninantor built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(message.getAuthor().get())){
             if(args.length == 3){
-                String quoteAuthorName = args[2];
-                String discordIdString = args[3];
+                String quoteAuthorName = args[1];
+                String discordIdString = args[2];
                 Long discordId = 0L;
 
                 //I'm too lazy to look for an equivalent method of TryParse in Java, so I'm just going to use a try/catch block

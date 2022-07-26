@@ -5,6 +5,7 @@ import attmayMBBot.functionalities.quoteManagement.QuoteAuthor;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -48,7 +49,7 @@ public class QuoteQuizInstance {
     private void initQuiz(Message quizRequestMessage){
         Random random = new Random();
 
-        this.correctAnswer = random.nextInt(5);
+        this.correctAnswer = random.nextInt(4) + 1; //1-4
 
         List<Pair<String, Quote>> quotePairList = this.quoteManager.getAllQuotesSortedByIssuedDate();
         Pair<String, Quote> randomPair = quotePairList.get(random.nextInt(quotePairList.size()));
@@ -84,16 +85,16 @@ public class QuoteQuizInstance {
         String possibleAnswersString = "";
         boolean correctAnswerInAlready = false;
         for(int i = 0; i < 4; i++){
-            if(i == correctAnswer){
-                possibleAnswersString += this.getNumberEmoji(i) + " " + correctAuthor + "\n";
+            if(i + 1 == correctAnswer){
+                possibleAnswersString += this.getNumberEmoji(i + 1) + " " + correctAuthor + "\n";
                 correctAnswerInAlready = true;
             }
             else{
                 if(correctAnswerInAlready){
-                    possibleAnswersString += this.getNumberEmoji(i) + " " + wrongAuthors.get(i - 1) + "\n";
+                    possibleAnswersString += this.getNumberEmoji(i + 1) + " " + wrongAuthors.get(i - 1) + "\n";
                 }
                 else{
-                    possibleAnswersString += this.getNumberEmoji(i) + " " + wrongAuthors.get(i) + "\n";
+                    possibleAnswersString += this.getNumberEmoji(i + 1) + " " + wrongAuthors.get(i) + "\n";
                 }
             }
         }
@@ -103,18 +104,18 @@ public class QuoteQuizInstance {
                 .color(Color.of(0x006666))
                 .title("Quote Quiz")
                 .url("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-                .description("This Quote Quiz was created by and for " + this.authorMention + ".")
-                .addField("\u200B", "\u200B", false)
+                .description("This Quote Quiz was created for " + this.authorMention + ".")
+                //.addField("\u200B", "\u200B", false)
                 .addField("Guess the author of this quote", quote.getQuoteText(), false)
-                .addField("\u200B", "\u200B", false)
+                //.addField("\u200B", "\u200B", false)
                 .addField("Here are your options:", possibleAnswersString, false)
                 .build();
 
         Message quizMessage = quizRequestMessage.getChannel().block().createMessage(embed).block();
-        this.quizMessage.addReaction(ReactionEmoji.unicode("\u0031\u20E3")).block();
-        this.quizMessage.addReaction(ReactionEmoji.unicode("\u0032\u20E3")).block();
-        this.quizMessage.addReaction(ReactionEmoji.unicode("\u0033\u20E3")).block();
-        this.quizMessage.addReaction(ReactionEmoji.unicode("\u0034\u20E3")).block();
+        quizMessage.addReaction(ReactionEmoji.unicode("\u0031\u20E3")).block();
+        quizMessage.addReaction(ReactionEmoji.unicode("\u0032\u20E3")).block();
+        quizMessage.addReaction(ReactionEmoji.unicode("\u0033\u20E3")).block();
+        quizMessage.addReaction(ReactionEmoji.unicode("\u0034\u20E3")).block();
         this.quizMessage = quizMessage;
     }
 
@@ -128,33 +129,35 @@ public class QuoteQuizInstance {
         return "";
     }
 
-    public void submitAnswer(Member member, ReactionEmoji emoji){
-        if (member.getId().asLong() == this.contestantId) {
-            switch (emoji.asEmojiData().name().get()) {
-                case "\u0031\u20E3":
-                    this.guess = 1;
-                    break;
-                case "\u0032\u20E3":
-                    this.guess = 2;
-                    break;
-                case "\u0033\u20E3":
-                    this.guess = 3;
-                    break;
-                case "\u0034\u20E3":
-                    this.guess = 4;
-                    break;
+    public void submitAnswer(User user, ReactionEmoji emoji){
+        if(!this.readyToDelete) {
+            if (user.getId().asLong() == this.contestantId) {
+                switch (emoji.asEmojiData().name().get()) {
+                    case "\u0031\u20E3":
+                        this.guess = 1;
+                        break;
+                    case "\u0032\u20E3":
+                        this.guess = 2;
+                        break;
+                    case "\u0033\u20E3":
+                        this.guess = 3;
+                        break;
+                    case "\u0034\u20E3":
+                        this.guess = 4;
+                        break;
+                }
+                if (this.guess != 0) //prevents faulty validation when wrong reaction is added to the message
+                    validateAnswer();
             }
-            if(this.guess != 0) //prevents faulty validation when wrong reaction is added to the message
-                validateAnswer();
         }
     }
     private void validateAnswer(){
         if(this.guess == this.correctAnswer){
             this.quizMessage.getChannel().block().createMessage(this.authorMention + " Correct!").block();
         } else {
-
             this.quizMessage.getChannel().block().createMessage(this.authorMention + " Incorrect! The correct answer was " + this.getNumberEmoji(this.correctAnswer)).block();
         }
+        this.readyToDelete = true;
     }
 
     public void checkForTimeout(){
