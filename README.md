@@ -12,6 +12,10 @@ In order to get this Bot running you have to change a few things in the AMBBConf
 ## Commands
 This is a list of all the commands this bot provides.
 
+### !commands
+This shows you a list of all the commands this bot provides. (It just links you to this exact page)
+
+
 ### !goodnight
 This command utilizes the [Datamuse API](https://www.datamuse.com/api/).
 Without any parameters this command produces a Goodnight-Message with a random adjecvite that is fitting for the day.
@@ -30,12 +34,41 @@ This command utilized the [JokeAPI](https://sv443.net/jokeapi/v2/) and returns a
 
 
 ### !quote
-This command returns a random quote. (This requires you to have added quotes before)
+This command returns a random quote.
 
 
-### !addquote [quote]
-This command adds a quote. The quotes are stored in AMBBConfig.json. In order for this command to work you have to be an authorized user. (Have the proper role)
+### !addquote [Author] [Year] [Quote]
+This command adds a quote. The quotes are stored in AMBBQuotes.json. In order for this command to work you have to be an authorized user. (Have the proper role). The author also needs to exist before running this command.
+
+
+### !quotelist
+This command returns a list of all the quotes.
+
+#### !quotelist [Author]
+This command returns a list of all the quotes by the author.
+
+
+### !addAuthor [Name] [Discord ID]
+This command adds a new author. The authors are stored in AMBBQuotes.json. In order for this command to work you have to be an authorized user. (Have the proper role).
+
+
+### !addAlias [Name] [new Alias]
+This command adds a new alias to an author. The aliases for an author are stored in AMBBQuotes.json. In order for this command to work you have to be an authorized user. (Have the proper role). When using !addquote or !quotelist [Name] you can also use one of the aliases of a user instead of the original name.
+
+
+### !quoteQuiz
+This command starts a Quote Quiz for the user that entered the command. The Quiz consists of a random quote and the user has to guess the author of the quote. The user answers via reactions to the message. Only the answer from the user that started the quiz will be accepted.
 
 
 ### !dinnerpost
 This command returns a random dinnerpost. It actually is just a random recipe plus a proper image. This command utilizes the [Spoonacular Food API](https://spoonacular.com/food-api). 
+
+#### !dinnerpost [Keyword]
+This command returns a random dinnerpost that is related to the keyword.
+
+
+### !uwu
+This command returns an uwu-ized version of the previous message in the text-chat.
+
+#### !uwu [Text]
+This command returns an uwu-ized version of the text that is passed as an argument.
