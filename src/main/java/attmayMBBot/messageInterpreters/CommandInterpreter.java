@@ -1,5 +1,6 @@
 package attmayMBBot.messageInterpreters;
 
+import attmayMBBot.commands.CommandsCommand;
 import attmayMBBot.commands.ICommand;
 import attmayMBBot.commands.NotFoundCommand;
 import attmayMBBot.commands.dinnerpostCommand.DinnerpostCommand;
@@ -38,6 +39,7 @@ public class CommandInterpreter {
         this.commandMap.put("!addauthor", new AddQuoteAuthorCommand(this.config, this.quoteManager));
         this.commandMap.put("!addalias", new AddQuoteAuthorAliasCommand(this.config, this.quoteManager));
         this.commandMap.put("!quotequiz", new QuoteQuizCommand(this.config, this.quoteQuizManager));
+        this.commandMap.put("!commands", new CommandsCommand());
         this.notFoundCommand = new NotFoundCommand();
     }
     public void interpretCommand(Message message){
