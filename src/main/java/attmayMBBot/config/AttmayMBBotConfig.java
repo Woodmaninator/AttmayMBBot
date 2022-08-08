@@ -11,6 +11,7 @@ public class AttmayMBBotConfig {
     private long authorizedRoleID;
     private long guildID;
     private AMBBGoodnightConfig goodnightConfig;
+    private ArcadeConfig arcadeConfig;
 
     public String getToken(){
         return this.token;
@@ -26,6 +27,9 @@ public class AttmayMBBotConfig {
     }
     public AMBBGoodnightConfig getGoodnightConfig(){
         return this.goodnightConfig;
+    }
+    public ArcadeConfig getArcadeConfig(){
+        return this.arcadeConfig;
     }
 
     public void saveConfigToFile(){

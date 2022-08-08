@@ -1,24 +1,23 @@
 package attmayMBBot.messageInterpreters;
 
 import attmayMBBot.config.AttmayMBBotConfig;
+import attmayMBBot.functionalities.arcade.ArcadeGameManager;
+import attmayMBBot.functionalities.arcade.ArcadeManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import attmayMBBot.messageInterpreters.messageTextInterpreters.IMessageTextInterpreter;
 import attmayMBBot.messageInterpreters.messageTextInterpreters.MessageTextInterpreter;
+import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.Message;
 
 public class MessageInterpreter {
     private AttmayMBBotConfig config;
-    private QuoteManager quoteManager;
-    private QuoteQuizManager quoteQuizManager;
     private CommandInterpreter commandInterpreter;
     private IMessageTextInterpreter messageTextInterpreter;
-    public MessageInterpreter(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteQuizManager quoteQuizManager){
+    public MessageInterpreter(GatewayDiscordClient gateway, AttmayMBBotConfig config, QuoteManager quoteManager, ArcadeManager arcadeManager, QuoteQuizManager quoteQuizManager, ArcadeGameManager arcadeGameManager){
         this.config = config;
-        this.quoteManager = quoteManager;
-        this.quoteQuizManager = quoteQuizManager;
-        this.commandInterpreter = new CommandInterpreter(config, quoteManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager);
+        this.commandInterpreter = new CommandInterpreter(gateway, config, quoteManager, arcadeManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager, arcadeGameManager);
         this.messageTextInterpreter = new MessageTextInterpreter(config);
     }
     public void interpretMessage(Message message) {
