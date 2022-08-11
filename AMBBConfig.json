@@ -15,6 +15,7 @@
   },
   "arcadeConfig": {
     "generalArcadeChannelId": 12345,
-    "alineChannelId": 12345
+    "alineChannelId": 12345,
+    "triviaChannelId": 12345
   }
 }

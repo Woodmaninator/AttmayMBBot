@@ -47,7 +47,7 @@ public class AttmayMBBotMain {
 
         //Event gets fired when the bot receives a message (private or in a text channel)
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
-           messageInterpreter.interpretMessage(event.getMessage());
+            messageInterpreter.interpretMessage(event.getMessage());
         });
 
         //Event gets fired when the bot receives a reaction (in a text channel)

@@ -6,6 +6,7 @@ import attmayMBBot.commands.NotFoundCommand;
 import attmayMBBot.commands.arcadeCommand.ArcadeHighscoreCommand;
 import attmayMBBot.commands.arcadeCommand.ArcadeXpCommand;
 import attmayMBBot.commands.arcadeCommand.alineCommand.AlineCommand;
+import attmayMBBot.commands.arcadeCommand.triviaCommand.TriviaCommand;
 import attmayMBBot.commands.dinnerpostCommand.DinnerpostCommand;
 import attmayMBBot.commands.goodnightCommand.GoodnightCommand;
 import attmayMBBot.commands.jokeCommand.JokeCommand;
@@ -43,6 +44,7 @@ public class CommandInterpreter {
         this.commandMap.put("!aline", new AlineCommand(config, arcadeGameManager));
         this.commandMap.put("!xp", new ArcadeXpCommand(config, arcadeManager));
         this.commandMap.put("!highscore", new ArcadeHighscoreCommand(gateway, config, arcadeManager));
+        this.commandMap.put("!trivia", new TriviaCommand(config, arcadeGameManager));
         this.notFoundCommand = new NotFoundCommand();
     }
     public void interpretCommand(Message message){

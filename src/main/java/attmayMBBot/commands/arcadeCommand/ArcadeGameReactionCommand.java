@@ -1,4 +1,4 @@
-package attmayMBBot.commands.arcadeCommand.alineCommand;
+package attmayMBBot.commands.arcadeCommand;
 
 import attmayMBBot.commands.IReactionCommand;
 import attmayMBBot.config.AttmayMBBotConfig;
@@ -8,10 +8,10 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.reaction.ReactionEmoji;
 
-public class AlineReactionCommand implements IReactionCommand {
+public class ArcadeGameReactionCommand implements IReactionCommand {
     private AttmayMBBotConfig config;
     private ArcadeGameManager arcadeGameManager;
-    public AlineReactionCommand(AttmayMBBotConfig config, ArcadeGameManager arcadeGameManager) {
+    public ArcadeGameReactionCommand(AttmayMBBotConfig config, ArcadeGameManager arcadeGameManager) {
         this.config = config;
         this.arcadeGameManager = arcadeGameManager;
     }

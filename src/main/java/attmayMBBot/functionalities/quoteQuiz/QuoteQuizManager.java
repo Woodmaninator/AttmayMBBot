@@ -4,6 +4,7 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.Message;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class QuoteQuizManager {
@@ -42,7 +43,7 @@ public class QuoteQuizManager {
                     //10 second intervals
                     Thread.sleep(10000);
                     this.updateInstances();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | ConcurrentModificationException e) {
                     //eh. not that important
                     e.printStackTrace();
                 }
