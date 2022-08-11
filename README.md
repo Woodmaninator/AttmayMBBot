@@ -16,6 +16,7 @@ In order to get this bot running you have to change a few things in the AMBBConf
 * **guildID**: You have to replace the placeholder 12345 with the ID of the Discord-Server. You can get it by Right-Click (on the server) -> Copy ID. Note that the role mentioned above has to be on this server.
 * **generalArcadeChannelId**: You have to replace the placeholder 12345 with the ID of the Discord-Channel that is used for the general arcade commands (!xp and !highscore).
 * **alineChannelId**: You have to replace the placeholder 12345 with the ID of the Discord-Channel that is used for the aLine game.
+* **triviaChannelId**: You have to replace the placeholder 12345 with the ID of the Discord-Channel that is used for the trivia game.
 
 ## Commands
 This is a list of all the commands this bot provides.
@@ -93,10 +94,17 @@ This command shows all users and their xp and level.
 
 
 ### !aline
-This command starts an aLine game. If no difficulty is specified it will choose the easy difficulty.
+This command starts an aLine game. If no difficulty is specified, it will choose the easy difficulty.
 
 #### !aline [easy|medium|hard]
 This command starts an aLine game with the specified difficulty.
 
 #### !aline tutorial
 This command displays a tutorial for the aLine game.
+
+
+### !trivia
+This command starts a trivia game. If no difficulty is specified, it will choose the easy difficulty. This command utilises the [Open Trivia Database API](https://opentdb.com/).
+
+#### !trivia [easy|medium|hard]
+This command starts trivia game with the specified difficulty.
