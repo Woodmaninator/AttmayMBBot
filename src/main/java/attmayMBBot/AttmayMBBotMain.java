@@ -3,6 +3,8 @@ package attmayMBBot;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.arcade.ArcadeGameManager;
 import attmayMBBot.functionalities.arcade.ArcadeManager;
+import attmayMBBot.functionalities.emojiKitchen.EmojiCombinationHandler;
+import attmayMBBot.functionalities.emojiKitchen.EmojiKitchenHandler;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import attmayMBBot.messageInterpreters.MessageInterpreter;
@@ -28,6 +30,9 @@ public class AttmayMBBotMain {
             reader = new FileReader("AMBBArcade.json");
             ArcadeManager arcadeManager = new Gson().fromJson(reader, ArcadeManager.class);
             reader.close();
+            reader = new FileReader("EmojiKitchen.json");
+            EmojiCombinationHandler emojiCombinationHandler = new Gson().fromJson(reader, EmojiCombinationHandler.class);
+            EmojiKitchenHandler.setEmojiCombinationHandler(emojiCombinationHandler);
 
             startBot(config, quoteManager, arcadeManager);
         } catch(Exception ex){

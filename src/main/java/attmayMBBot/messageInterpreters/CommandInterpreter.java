@@ -8,6 +8,7 @@ import attmayMBBot.commands.arcadeCommand.ArcadeXpCommand;
 import attmayMBBot.commands.arcadeCommand.alineCommand.AlineCommand;
 import attmayMBBot.commands.arcadeCommand.triviaCommand.TriviaCommand;
 import attmayMBBot.commands.dinnerpostCommand.DinnerpostCommand;
+import attmayMBBot.commands.emojiKitchenCommand.EmojiKitchenCommand;
 import attmayMBBot.commands.goodnightCommand.GoodnightCommand;
 import attmayMBBot.commands.jokeCommand.JokeCommand;
 import attmayMBBot.commands.quoteCommand.*;
@@ -45,6 +46,7 @@ public class CommandInterpreter {
         this.commandMap.put("!xp", new ArcadeXpCommand(config, arcadeManager));
         this.commandMap.put("!highscore", new ArcadeHighscoreCommand(gateway, config, arcadeManager));
         this.commandMap.put("!trivia", new TriviaCommand(config, arcadeGameManager));
+        this.commandMap.put("!combine", new EmojiKitchenCommand(config));
         this.notFoundCommand = new NotFoundCommand();
     }
     public void interpretCommand(Message message){
