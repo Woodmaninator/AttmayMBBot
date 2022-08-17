@@ -83,6 +83,10 @@ This command returns an uwu-ized version of the previous message in the text-cha
 This command returns an uwu-ized version of the text that is passed as an argument.
 
 
+### !combine [emoji1] [emoji2]
+This command lets you combine two emojis. It uses the Google gboard emoji kitchen combinations. There are about 26420 combinations available at the moment. This list has to be manually updated for future updates.
+Make sure to leave a space between the two emojis.
+
 ## Arcade Commands
 
 ### !xp
