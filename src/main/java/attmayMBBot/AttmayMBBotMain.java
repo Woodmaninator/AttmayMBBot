@@ -7,6 +7,8 @@ import attmayMBBot.functionalities.emojiKitchen.EmojiCombinationHandler;
 import attmayMBBot.functionalities.emojiKitchen.EmojiKitchenHandler;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
+import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
+import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
 import attmayMBBot.messageInterpreters.MessageInterpreter;
 import attmayMBBot.reactionInterpreters.ReactionInterpreter;
 import com.google.gson.Gson;
@@ -27,6 +29,9 @@ public class AttmayMBBotMain {
             reader = new FileReader("AMBBQuotes.json");
             QuoteManager quoteManager = new Gson().fromJson(reader, QuoteManager.class);
             reader.close();
+            reader = new FileReader("AMBBQuoteRanking.json");
+            QuoteRankingResults quoteRankingResults = new Gson().fromJson(reader, QuoteRankingResults.class);
+            reader.close();
             reader = new FileReader("AMBBArcade.json");
             ArcadeManager arcadeManager = new Gson().fromJson(reader, ArcadeManager.class);
             reader.close();
@@ -34,21 +39,22 @@ public class AttmayMBBotMain {
             EmojiCombinationHandler emojiCombinationHandler = new Gson().fromJson(reader, EmojiCombinationHandler.class);
             EmojiKitchenHandler.setEmojiCombinationHandler(emojiCombinationHandler);
 
-            startBot(config, quoteManager, arcadeManager);
+            startBot(config, quoteManager, quoteRankingResults, arcadeManager);
         } catch(Exception ex){
             System.out.println("Something went terribly wrong when trying to read the config/start up the bot. You should get that fixed asap.");
             ex.printStackTrace();
         }
     }
-    public static void startBot(AttmayMBBotConfig config, QuoteManager quoteManager, ArcadeManager arcadeManager){
+    public static void startBot(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteRankingResults quoteRankingResults, ArcadeManager arcadeManager){
         final DiscordClient client = DiscordClient.create(config.getToken());
         final GatewayDiscordClient gateway = client.login().block();
 
         QuoteQuizManager quoteQuizManager = new QuoteQuizManager(quoteManager);
         ArcadeGameManager arcadeGameManager = new ArcadeGameManager(arcadeManager);
+        QuoteRankingManager quoteRankingManager = new QuoteRankingManager(quoteManager, quoteRankingResults);
 
-        MessageInterpreter messageInterpreter = new MessageInterpreter(gateway, config, quoteManager, arcadeManager, quoteQuizManager, arcadeGameManager);
-        ReactionInterpreter reactionInterpreter = new ReactionInterpreter(config, quoteQuizManager, arcadeGameManager);
+        MessageInterpreter messageInterpreter = new MessageInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, quoteQuizManager, arcadeGameManager);
+        ReactionInterpreter reactionInterpreter = new ReactionInterpreter(config, quoteQuizManager, quoteRankingManager, arcadeGameManager);
 
         //Event gets fired when the bot receives a message (private or in a text channel)
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
@@ -62,6 +68,9 @@ public class AttmayMBBotMain {
 
         //Start the update loop for the quote quiz manager
         quoteQuizManager.startUpdateLoop();
+
+        //Start the update loop for the quote ranking manager
+        quoteRankingManager.startUpdateLoop();
 
         //Start the update loop for the arcade manager
         arcadeGameManager.startUpdateLoop();

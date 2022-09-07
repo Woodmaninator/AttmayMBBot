@@ -10,6 +10,7 @@ public class AttmayMBBotConfig {
     private String spoonacularApiKey;
     private long authorizedRoleID;
     private long guildID;
+    private long quoteRankingChannelID;
     private AMBBGoodnightConfig goodnightConfig;
     private ArcadeConfig arcadeConfig;
 
@@ -24,6 +25,9 @@ public class AttmayMBBotConfig {
     }
     public long getGuildID() {
         return guildID;
+    }
+    public long getQuoteRankingChannelID() {
+        return quoteRankingChannelID;
     }
     public AMBBGoodnightConfig getGoodnightConfig(){
         return this.goodnightConfig;

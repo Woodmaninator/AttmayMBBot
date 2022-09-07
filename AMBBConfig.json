@@ -3,6 +3,7 @@
   "spoonacularApiKey":"12345",
   "authorizedRoleID":12345,
   "guildID":12345,
+  "quoteRankingChannelID": 12345,
   "goodnightConfig": {
     "compoundModifierList":[
       "filled",

@@ -19,6 +19,8 @@ import attmayMBBot.functionalities.arcade.ArcadeManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
+import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
+import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.Message;
 
@@ -28,7 +30,7 @@ public class CommandInterpreter {
     private AttmayMBBotConfig config;
     private HashMap<String, ICommand> commandMap;
     private ICommand notFoundCommand;
-    public CommandInterpreter(GatewayDiscordClient gateway, AttmayMBBotConfig config, QuoteManager quoteManager, ArcadeManager arcadeManager, QuoteIDManager quoteIDManager, QuoteQuizManager quoteQuizManager, ArcadeGameManager arcadeGameManager) {
+    public CommandInterpreter(GatewayDiscordClient gateway, AttmayMBBotConfig config, QuoteManager quoteManager, QuoteRankingManager quoteRankingManager, QuoteRankingResults quoteRankingResults, ArcadeManager arcadeManager, QuoteIDManager quoteIDManager, QuoteQuizManager quoteQuizManager, ArcadeGameManager arcadeGameManager) {
         this.config = config;
         this.commandMap = new HashMap<String, ICommand>();
         this.commandMap.put("!goodnight", new GoodnightCommand(config));
@@ -47,6 +49,8 @@ public class CommandInterpreter {
         this.commandMap.put("!highscore", new ArcadeHighscoreCommand(gateway, config, arcadeManager));
         this.commandMap.put("!trivia", new TriviaCommand(config, arcadeGameManager));
         this.commandMap.put("!combine", new EmojiKitchenCommand(config));
+        this.commandMap.put("!rankquotes", new QuoteRankingCommand(config, quoteRankingManager));
+        this.commandMap.put("!rankedquotelist", new RankedQuoteListCommand(config, quoteRankingResults, quoteManager));
         this.notFoundCommand = new NotFoundCommand();
     }
     public void interpretCommand(Message message){

@@ -13,7 +13,7 @@ public class PopupMessageHandler {
             try {
                 Thread.sleep(duration);
                 newMessage.delete().block();
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();

@@ -3,9 +3,11 @@ package attmayMBBot.reactionInterpreters;
 import attmayMBBot.commands.IReactionCommand;
 import attmayMBBot.commands.arcadeCommand.ArcadeGameReactionCommand;
 import attmayMBBot.commands.quoteCommand.AddQuoteQuizReactionCommand;
+import attmayMBBot.commands.quoteCommand.AddQuoteRankingReactionCommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.arcade.ArcadeGameManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
+import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.reaction.ReactionEmoji;
@@ -17,10 +19,11 @@ public class ReactionInterpreter {
     private AttmayMBBotConfig config;
     private List<IReactionCommand> addedReactionCommands;
 
-    public ReactionInterpreter(AttmayMBBotConfig config, QuoteQuizManager quoteQuizManager, ArcadeGameManager arcadeGameManager) {
+    public ReactionInterpreter(AttmayMBBotConfig config, QuoteQuizManager quoteQuizManager, QuoteRankingManager quoteRankingManager, ArcadeGameManager arcadeGameManager) {
         this.addedReactionCommands = new ArrayList<>();
         this.addedReactionCommands.add(new AddQuoteQuizReactionCommand(config, quoteQuizManager));
         this.addedReactionCommands.add(new ArcadeGameReactionCommand(config, arcadeGameManager)); //Redirects reaction commands for all different game instances
+        this.addedReactionCommands.add(new AddQuoteRankingReactionCommand(config, quoteRankingManager));
     }
 
     public void interpretAddedReaction(User user, Message message, ReactionEmoji emoji){
