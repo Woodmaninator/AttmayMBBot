@@ -88,6 +88,11 @@ public class QuoteRankingInstance {
     private EmbedCreateSpec createQuoteRankingEmbed(){
         List<Pair<String, Quote>> quoteList = this.quoteManager.getAllQuotesSortedByIssuedDate();
 
+        if(quoteList.size() == 0) {
+            this.readyToDelete = true;
+            return EmbedCreateSpec.builder().title("Error!").description("No quotes exist in the system!").build();
+        }
+
         Random random = new Random();
 
         Pair<String, Quote> quote1 = quoteList.get(random.nextInt(quoteList.size()));
