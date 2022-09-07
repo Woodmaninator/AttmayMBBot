@@ -69,8 +69,25 @@ This command adds a new alias to an author. The aliases for an author are stored
 This command starts a Quote Quiz for the user that entered the command. The Quiz consists of a random quote and the user has to guess the author of the quote. The user answers via reactions to the message. Only the answer from the user that started the quiz will be accepted.
 
 
+### !rankQuotes
+This command will prompt the bot to send a message with which you can vote for your favourite of two different quotes. The quotes are chosen randomly and by deciding which one of these two quotes you prefer, a ranking is created. You vote using reactions and after reacting the same message will display two new quotes so you can continue voting using the same message.
+
+
+### !rankedQuoteList
+This command will display the top 10 quotes based on the ranking from !rankQuotes.
+
+#### !rankedQuoteList [Author]
+This command will display the top 10 quotes of the quote author based on the ranking from !rankQuotes.
+
+#### !rankedQuoteList [Count]
+This command will display the top [Count] quotes based on the ranking from !rankQuotes.
+
+#### !rankedQuoteList [Author] [Count]
+This command will display the top [Count] quotes of the quote author based on the ranking from !rankQuotes.
+
+
 ### !dinnerpost
-This command returns a random dinnerpost. It actually is just a random recipe plus a proper image. This command utilizes the [Spoonacular Food API](https://spoonacular.com/food-api). 
+This command returns a random dinnerpost. It actually is just a random recipe plus a proper image. This command utilizes the [Spoonacular Food API](https://spoonacular.com/food-api).
 
 #### !dinnerpost [Keyword]
 This command returns a random dinnerpost that is related to the keyword.
