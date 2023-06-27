@@ -45,9 +45,26 @@ This command utilized the [JokeAPI](https://sv443.net/jokeapi/v2/) and returns a
 ### !quote
 This command returns a random quote.
 
+#### !quote [Quote ID]
+This command returns the quote that the ID belongs to.
+
 
 ### !addquote [Author] [Year] [Quote]
 This command adds a quote. The quotes are stored in AMBBQuotes.json. In order for this command to work you have to be an authorized user. (Have the proper role). The author also needs to exist before running this command.
+
+
+### !removequote
+This command removes the last added quote.
+
+#### !removequote [Quote ID]
+This command removes the quote associated with the ID.
+
+
+### !fixquote [New Quote Text]
+This command edits the quote text of the last added quote.
+
+#### !fixquote [Quote ID] [New Quote Text]
+This command edits the quote text of the quote associated with the ID.
 
 
 ### !quotelist
@@ -55,6 +72,13 @@ This command returns a list of all the quotes.
 
 #### !quotelist [Author]
 This command returns a list of all the quotes by the author.
+
+
+### !quoteidlist
+This command returns a list of all the quotes and their IDs.
+
+#### !quoteidlist [Author]
+This command returns a list of all the quotes with quote IDs by the author.
 
 
 ### !addAuthor [Name] [Discord ID]

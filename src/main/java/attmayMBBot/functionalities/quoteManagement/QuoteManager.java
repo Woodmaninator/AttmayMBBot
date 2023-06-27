@@ -108,4 +108,27 @@ public class QuoteManager {
             ex.printStackTrace();
         }
     }
+
+    public boolean removeQuote(Long id) {
+        for (QuoteAuthor author : quoteAuthors) {
+            if (author.getQuotes().removeIf(quote -> quote.id.equals(id))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean modifyQuoteText(Long id, String newText) {
+        for (QuoteAuthor author : quoteAuthors) {
+            for (int i = 0; i < author.getQuotes().size(); ++i) {
+                if (author.getQuotes().get(i).getId().equals(id)) {
+                    author.getQuotes().get(i).quoteText = newText;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

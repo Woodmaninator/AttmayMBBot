@@ -21,6 +21,10 @@ public class QuoteIDManager {
         }
     }
 
+    public Long getLastQuoteId() {
+        return this.currentQuoteId-1;
+    }
+
     public Long getNextQuoteId() {
         return this.currentQuoteId++;
     }

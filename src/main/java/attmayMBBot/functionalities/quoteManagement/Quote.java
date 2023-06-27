@@ -36,4 +36,8 @@ public class Quote {
     public Date getQuoteIssuedOn() {
         return quoteIssuedOn;
     }
+
+    public String toFormattedString(String authorName) {
+        return quoteText + " - " + authorName + ", " + quoteYear;
+    }
 }
