@@ -30,6 +30,12 @@ public class RemoveQuoteCommand implements ICommand {
             return;
         }
 
+        // check for existing quotes
+        if (quoteManager.getAllQuotesSortedByIssuedDate().size() <= 0) {
+            message.getChannel().block().createMessage("There are no quotes in the system yet.").block();
+            return;
+        }
+
         // specific case: remove specific quote
         if (args.length > 1) {
             try {

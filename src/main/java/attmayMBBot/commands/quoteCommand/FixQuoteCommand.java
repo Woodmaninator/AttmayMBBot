@@ -33,6 +33,12 @@ public class FixQuoteCommand implements ICommand {
             return;
         }
 
+        // check for existing quotes
+        if (quoteManager.getAllQuotesSortedByIssuedDate().size() <= 0) {
+            message.getChannel().block().createMessage("There are no quotes in the system yet.").block();
+            return;
+        }
+
         // check for correct amount of arguments
         if (args.length < 2) {
             message.getChannel()
