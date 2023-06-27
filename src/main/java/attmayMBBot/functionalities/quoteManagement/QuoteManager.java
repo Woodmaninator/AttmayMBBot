@@ -108,4 +108,14 @@ public class QuoteManager {
             ex.printStackTrace();
         }
     }
+
+    public boolean removeQuote(Long id) {
+        for (QuoteAuthor author : quoteAuthors) {
+            if (author.getQuotes().removeIf(quote -> quote.id.equals(id))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
