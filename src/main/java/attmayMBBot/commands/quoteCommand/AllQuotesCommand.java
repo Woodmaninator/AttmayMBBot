@@ -42,7 +42,7 @@ public class AllQuotesCommand implements ICommand {
                 String embedTitle = "List of all Quotes";
                 StringBuilder sb = new StringBuilder();
                 for (Pair<String, Quote> quotePair : quoteList) {
-                    String nextQuote = quotePair.getValue().getQuoteText() + " - " + quotePair.getKey() + ", " + quotePair.getValue().getQuoteYear();
+                    String nextQuote = quotePair.getValue().toFormattedString(quotePair.getKey());
                     if (sb.toString().length() + (nextQuote + "\n\n").length() < 4096)
                         sb.append(nextQuote + "\n\n");
                     else {

@@ -114,7 +114,7 @@ public class RankedQuoteListCommand implements ICommand {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++) {
             String statString = "(" + stats.get(i).getWins() + "|" + stats.get(i).getDraws() + "|" + stats.get(i).getLosses() + ")";
-            String nextQuote = (i + 1) + ". " + statString  + " " + stats.get(i).getQuote().getValue().getQuoteText() + " - " + stats.get(i).getQuote().getKey() + ", " + stats.get(i).getQuote().getValue().getQuoteYear();
+            String nextQuote = (i + 1) + ". " + statString  + " " + stats.get(i).getQuote().getValue().toFormattedString(stats.get(i).getQuote().getKey());
             if (sb.toString().length() + (nextQuote + "\n\n").length() < 4096)
                 sb.append(nextQuote + "\n\n");
             else {

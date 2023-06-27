@@ -106,8 +106,8 @@ public class QuoteRankingInstance {
         this.currentQuote1Id = quote1.getValue().getId();
         this.currentQuote2Id = quote2.getValue().getId();
 
-        String quote1String = ":one: " + quote1.getValue().getQuoteText() + " - " + quote1.getKey() + ", " + quote1.getValue().getQuoteYear();
-        String quote2String = ":two: " + quote2.getValue().getQuoteText() + " - " + quote2.getKey() + ", " + quote2.getValue().getQuoteYear();
+        String quote1String = ":one: " + quote1.getValue().toFormattedString(quote1.getKey());
+        String quote2String = ":two: " + quote2.getValue().toFormattedString(quote2.getKey());
 
         //Build the embed!
         EmbedCreateSpec embed = EmbedCreateSpec.builder()

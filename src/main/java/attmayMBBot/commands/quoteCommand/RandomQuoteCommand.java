@@ -26,7 +26,7 @@ public class RandomQuoteCommand implements ICommand {
         if(quotePairs.size() > 0) {
             Random random = new Random();
             Pair<String, Quote> randomPair = quotePairs.get(random.nextInt(quotePairs.size()));
-            message.getChannel().block().createMessage(randomPair.getValue().getQuoteText() + " - " + randomPair.getKey() + ", " + randomPair.getValue().getQuoteYear()).block();
+            message.getChannel().block().createMessage(randomPair.getValue().toFormattedString(randomPair.getKey())).block();
         } else
             message.getChannel().block().createMessage("There are no quotes in the system yet.").block();
     }
