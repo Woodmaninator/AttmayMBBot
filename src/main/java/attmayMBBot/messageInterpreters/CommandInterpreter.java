@@ -36,7 +36,8 @@ public class CommandInterpreter {
         this.commandMap.put("!goodnight", new GoodnightCommand(config));
         this.commandMap.put("!addquote", new AddQuoteCommand(config, quoteManager, quoteIDManager));
         this.commandMap.put("!quotelist", new AllQuotesCommand(config, quoteManager));
-        this.commandMap.put("!quote", new RandomQuoteCommand(config, quoteManager));
+        this.commandMap.put("!quoteidlist", new AllQuoteIDsCommand(config, quoteManager));
+        this.commandMap.put("!quote", new GetQuoteCommand(config, quoteManager, quoteIDManager));
         this.commandMap.put("!joke", new JokeCommand(config));
         this.commandMap.put("!dinnerpost", new DinnerpostCommand(config));
         this.commandMap.put("!uwu", new UwUCommand(config));
