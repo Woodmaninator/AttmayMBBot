@@ -118,4 +118,17 @@ public class QuoteManager {
 
         return false;
     }
+
+    public boolean modifyQuoteText(Long id, String newText) {
+        for (QuoteAuthor author : quoteAuthors) {
+            for (int i = 0; i < author.getQuotes().size(); ++i) {
+                if (author.getQuotes().get(i).getId().equals(id)) {
+                    author.getQuotes().get(i).quoteText = newText;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
