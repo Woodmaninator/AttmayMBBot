@@ -54,17 +54,17 @@ This command adds a quote. The quotes are stored in AMBBQuotes.json. In order fo
 
 
 ### !removequote
-This command removes the last added quote.
+This command removes the last added quote. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 #### !removequote [Quote ID]
-This command removes the quote associated with the ID.
+This command removes the quote associated with the ID. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 
 ### !fixquote [New Quote Text]
-This command edits the quote text of the last added quote.
+This command edits the quote text of the last added quote. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 #### !fixquote [Quote ID] [New Quote Text]
-This command edits the quote text of the quote associated with the ID.
+This command edits the quote text of the quote associated with the ID. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 
 ### !quotelist
