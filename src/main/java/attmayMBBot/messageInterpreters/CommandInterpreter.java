@@ -44,7 +44,11 @@ public class CommandInterpreter {
         this.commandMap.put("!dinnerpost", new DinnerpostCommand(config));
         this.commandMap.put("!uwu", new UwUCommand(config));
         this.commandMap.put("!addauthor", new AddQuoteAuthorCommand(config, quoteManager));
+        this.commandMap.put("!renameauthor", new RenameQuoteAuthorCommand(config, quoteManager));
+        this.commandMap.put("!removeauthor", new RemoveQuoteAuthorCommand(config, quoteManager));
+        this.commandMap.put("!authorlist", new AllAuthorsCommand(config, quoteManager));
         this.commandMap.put("!addalias", new AddQuoteAuthorAliasCommand(config, quoteManager));
+        this.commandMap.put("!removealias", new RemoveQuoteAuthorAliasCommand(config, quoteManager));
         this.commandMap.put("!quotequiz", new QuoteQuizCommand(config, quoteQuizManager));
         this.commandMap.put("!commands", new CommandsCommand());
         this.commandMap.put("!aline", new AlineCommand(config, arcadeGameManager));

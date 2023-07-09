@@ -54,17 +54,17 @@ This command adds a quote. The quotes are stored in AMBBQuotes.json. In order fo
 
 
 ### !removequote
-This command removes the last added quote.
+This command removes the last added quote. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 #### !removequote [Quote ID]
-This command removes the quote associated with the ID.
+This command removes the quote associated with the ID. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 
 ### !fixquote [New Quote Text]
-This command edits the quote text of the last added quote.
+This command edits the quote text of the last added quote. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 #### !fixquote [Quote ID] [New Quote Text]
-This command edits the quote text of the quote associated with the ID.
+This command edits the quote text of the quote associated with the ID. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 
 ### !quotelist
@@ -85,8 +85,30 @@ This command returns a list of all the quotes with quote IDs by the author.
 This command adds a new author. The authors are stored in AMBBQuotes.json. In order for this command to work you have to be an authorized user. (Have the proper role).
 
 
+### !renameAuthor [current Name] [new Name]
+This command renames the author in the AMBBQuotes.json file. In order for this command to work you have to be an authorized user. (Have the proper role).
+
+
+### !removeAuthor [Name]
+This command deletes the author entry from the AMBBQuotes.json file. This subsequently removes all of their quotes. In order for this command to work you have to be an authorized user. (Have the proper role).
+
+
 ### !addAlias [Name] [new Alias]
 This command adds a new alias to an author. The aliases for an author are stored in AMBBQuotes.json. In order for this command to work you have to be an authorized user. (Have the proper role). When using !addquote or !quotelist [Name] you can also use one of the aliases of a user instead of the original name.
+
+
+### !removeAlias [Alias]
+This command removes the alias from the author it's attached to. In order for this command to work you have to be an authorized user. (Have the proper role).
+
+
+### !authorlist
+This command will list all the authors in the AMBBQuotes.json file sorted by number of quotes.
+
+#### !authorlist [count]
+This command will list [count] authors from the AMBBQuotes.json file sorted by number of quotes.
+
+#### !authorlist top [count]
+This command will list all the authors that are in the top [count] by number of quotes.
 
 
 ### !quoteQuiz

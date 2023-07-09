@@ -33,4 +33,7 @@ public class QuoteAuthor {
     public List<Quote> getQuotes() {
         return quotes;
     }
+
+    //Setters
+    public void setName(String name) { this.name = name; }
 }

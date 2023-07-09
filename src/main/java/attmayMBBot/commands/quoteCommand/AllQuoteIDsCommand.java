@@ -63,7 +63,7 @@ public class AllQuoteIDsCommand implements ICommand {
             // In case the first embedDescriptions is full (limit of 4096), start another one and create a new StringBuilder instance.
             // The description gets stored in the embedDescription list.
             embedDescriptions.add(sb.toString());
-            sb = new StringBuilder(nextQuote + "\n\n");
+            sb = new StringBuilder(nextQuote);
         }
 
         // After every quote is done, add the last string in the StringBuilder to the list,
