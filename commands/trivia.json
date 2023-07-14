@@ -1,0 +1,13 @@
+{
+    "name": "trivia",
+    "type": 1,
+    "description": "Starts a trivia game (on easy by default).",
+    "options": [
+        {
+            "name": "difficulty",
+            "description": "The difficulty of the game (easy|medium|hard).",
+            "type": 3,
+            "required": false
+        }
+    ]
+}

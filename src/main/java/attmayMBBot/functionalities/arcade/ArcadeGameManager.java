@@ -6,6 +6,8 @@ import attmayMBBot.functionalities.arcade.trivia.ETriviaDifficulty;
 import attmayMBBot.functionalities.arcade.trivia.TriviaArcadeGameInstance;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizInstance;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -21,19 +23,19 @@ public class ArcadeGameManager {
         this.arcadeGameInstanceList = new ArrayList<>();
         this.semaphore = new Semaphore(1);
     }
-    public void addAlineArcadeGameInstance(Message message, Long contestantId, EAlineDifficulty difficulty) {
+    public void addAlineArcadeGameInstance(MessageChannel channel, User user, EAlineDifficulty difficulty) {
         try {
             this.semaphore.acquire(1);
-            this.arcadeGameInstanceList.add(new AlineArcadeGameInstance(this.arcadeManager, message, contestantId, difficulty));
+            this.arcadeGameInstanceList.add(new AlineArcadeGameInstance(this.arcadeManager, channel, user, difficulty));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         this.semaphore.release(1);
     }
-    public void addTriviaArcadeGameInstance(Message message, Long contestantId, ETriviaDifficulty difficulty) {
+    public void addTriviaArcadeGameInstance(MessageChannel channel, User user, ETriviaDifficulty difficulty) {
         try {
             this.semaphore.acquire(1);
-            this.arcadeGameInstanceList.add(new TriviaArcadeGameInstance(this.arcadeManager, message, contestantId, difficulty));
+            this.arcadeGameInstanceList.add(new TriviaArcadeGameInstance(this.arcadeManager, channel, user, difficulty));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

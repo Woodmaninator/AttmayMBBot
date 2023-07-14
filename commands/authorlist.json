@@ -1,0 +1,19 @@
+{
+    "name": "authorlist",
+    "type": 1,
+    "description": "Lists authors sorted by number of quotes.",
+    "options": [
+        {
+            "name": "argument1",
+            "description": "The number of authors to feature or 'top'.",
+            "type": 3,
+            "required": false
+        },
+        {
+            "name": "argument2",
+            "description": "Required count of authors after 'top'.",
+            "type": 4,
+            "required": false
+        }
+    ]
+}

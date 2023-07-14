@@ -5,7 +5,8 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteAuthor;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 public class AddQuoteAuthorAliasCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -17,9 +18,9 @@ public class AddQuoteAuthorAliasCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
-        //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninantor built a class for this very thing
-        if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(message.getAuthor().get())){
+    public void execute(String[] args, User sender, MessageChannel channel) {
+        //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
+        if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
             if(args.length == 3){
                 String quoteAuthorName = args[1];
                 String newAlias = args[2];
@@ -31,20 +32,20 @@ public class AddQuoteAuthorAliasCommand implements ICommand {
                         //alias does not exist, add it to the quoteAuthor
                         quoteAuthor.getAliases().add(newAlias);
                         this.quoteManager.saveQuotesToFile();
-                        message.getChannel().block().createMessage("Alias successfully added!").block();
+                        channel.createMessage("Alias successfully added!").block();
                     } else {
                         //alias already exists, print an error
-                        message.getChannel().block().createMessage("Alias can not be added because that alias is already registered!").block();
+                        channel.createMessage("Alias can not be added because that alias is already registered!").block();
                     }
                 } else {
                     //user does not exist
-                    message.getChannel().block().createMessage("The user you are trying to add an alias to does not exist!").block();
+                    channel.createMessage("The user you are trying to add an alias to does not exist!").block();
                 }
             } else {
                 //Wrong number of arguments
-                message.getChannel().block().createMessage("This command feels incomplete.\nUse !addAlias [Username] [new Alias] instead!").block();
+                channel.createMessage("This command feels incomplete.\nUse /addAlias [Username] [new Alias] instead!").block();
             }
         } else //No access to the command
-            message.getChannel().block().createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
+            channel.createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
     }
 }

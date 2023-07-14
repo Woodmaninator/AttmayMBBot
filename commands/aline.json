@@ -1,0 +1,13 @@
+{
+    "name": "aline",
+    "type": 1,
+    "description": "Starts an aLine game (on easy by default).",
+    "options": [
+        {
+            "name": "mode",
+            "description": "The difficulty of the game (easy|medium|hard) or 'tutorial' for the tutorial.",
+            "type": 3,
+            "required": false
+        }
+    ]
+}

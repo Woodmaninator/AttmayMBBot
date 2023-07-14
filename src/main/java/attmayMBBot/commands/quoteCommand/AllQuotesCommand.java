@@ -4,7 +4,8 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.Quote;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 import javafx.util.Pair;
 
@@ -20,7 +21,7 @@ public class AllQuotesCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         List<Pair<String,Quote>> quoteList = null;
         if(args.length == 1){
             //Default case: print all the quotes
@@ -31,7 +32,7 @@ public class AllQuotesCommand implements ICommand {
             if(quoteManager.checkIfQuoteAuthorNameExists(authorName)){
                 quoteList = quoteManager.getAllQuotesFromAuthorSortedByIssuedDate(authorName);
             } else {
-                message.getChannel().block().createMessage("Author not found!").block();
+                channel.createMessage("Author not found!").block();
                 return;
             }
         }
@@ -58,10 +59,10 @@ public class AllQuotesCommand implements ICommand {
                     embedDescriptions.add(sb.toString());
                 //Just yeet them out there
                 for (String embedDescription : embedDescriptions) {
-                    message.getChannel().block().createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
+                    channel.createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
                 }
             } else {
-                message.getChannel().block().createMessage("There are no quotes in the system yet (That match your requirement).").block();
+                channel.createMessage("There are no quotes in the system yet (That match your requirement).").block();
             }
         }
     }

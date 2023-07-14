@@ -1,0 +1,13 @@
+{
+    "name": "removeauthor",
+    "type": 1,
+    "description" : "Deletes the author and all of their quotes.",
+    "options": [
+        {
+            "name": "authorname",
+            "description": "The name of the author to be deleted.",
+            "type": 3,
+            "required": true
+        }
+    ]
+}

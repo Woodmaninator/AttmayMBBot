@@ -1,0 +1,19 @@
+{
+  "name": "renameauthor",
+  "type": 1,
+  "description" : "Adds an author to the quote system.",
+  "options": [
+    {
+      "name": "old-name",
+      "description": "the old name of the author",
+      "type": 3,
+      "required": true
+    },
+    {
+      "name": "new-name",
+      "description": "the new name of the author",
+      "type": 3,
+      "required": true
+    }
+  ]
+}

@@ -4,7 +4,6 @@ import attmayMBBot.commands.IReactionCommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizInstance;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
-import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.reaction.ReactionEmoji;

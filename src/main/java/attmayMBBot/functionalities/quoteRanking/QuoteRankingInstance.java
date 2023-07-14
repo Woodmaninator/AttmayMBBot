@@ -4,6 +4,7 @@ import attmayMBBot.functionalities.quoteManagement.Quote;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -33,21 +34,21 @@ public class QuoteRankingInstance {
         return this.readyToDelete;
     }
 
-    public QuoteRankingInstance(QuoteManager quoteManager, QuoteRankingResults quoteRankingResults, Message message, String authorMention, Long contestantId) {
+    public QuoteRankingInstance(QuoteManager quoteManager, QuoteRankingResults quoteRankingResults, MessageChannel channel, User user) {
         this.quoteManager = quoteManager;
         this.quoteRankingResults = quoteRankingResults;
-        this.authorMention = authorMention;
-        this.contestantId = contestantId;
+        this.authorMention = user.getMention();
+        this.contestantId = user.getId().asLong();
         this.lastInteractionTime = new Date().getTime();
         this.timeOutDuration = 5L * 60L * 1000L; //5 minutes
         this.readyToDelete = false;
 
-        initRankingMessage(message);
+        initRankingMessage(channel);
     }
-    private void initRankingMessage(Message message){
+    private void initRankingMessage(MessageChannel channel){
         EmbedCreateSpec embed = createQuoteRankingEmbed();
 
-        Message rankingMessage = message.getChannel().block().createMessage(embed).block();
+        Message rankingMessage = channel.createMessage(embed).block();
         rankingMessage.addReaction(ReactionEmoji.unicode("\u0031\u20E3")).block();
         rankingMessage.addReaction(ReactionEmoji.unicode("\u0032\u20E3")).block();
         this.rankingMessage = rankingMessage;

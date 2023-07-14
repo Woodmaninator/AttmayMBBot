@@ -1,0 +1,13 @@
+{
+  "name": "quoteidlist",
+  "type": 1,
+  "description" : "Lists all of the quotes including their ids in the system.",
+  "options": [
+    {
+      "name": "author",
+      "description": "author or alias of the user you want the quotes of",
+      "type": 3,
+      "required": false
+    }
+  ]
+}

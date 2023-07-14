@@ -7,6 +7,8 @@ import attmayMBBot.functionalities.arcade.aline.EAlineDifficulty;
 import attmayMBBot.functionalities.arcade.trivia.ETriviaDifficulty;
 import attmayMBBot.functionalities.popupMessageHandling.PopupMessageHandler;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 public class TriviaCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -18,8 +20,8 @@ public class TriviaCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
-        if(message.getChannel().block().getId().asLong() == this.config.getArcadeConfig().getTriviaChannelId()) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
+        if(channel.getId().asLong() == this.config.getArcadeConfig().getTriviaChannelId()) {
             ETriviaDifficulty difficulty = ETriviaDifficulty.EASY;
             if (args.length > 1) {
                 switch (args[1].toLowerCase()) {
@@ -34,9 +36,9 @@ public class TriviaCommand implements ICommand {
                         break;
                 }
             }
-            this.arcadeGameManager.addTriviaArcadeGameInstance(message, message.getAuthor().get().getId().asLong(), difficulty);
+            this.arcadeGameManager.addTriviaArcadeGameInstance(channel, sender, difficulty);
         } else {
-            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(message,  message.getAuthor().get().getMention() +
+            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(channel,  sender.getMention() +
                     " You can only use this command in the <#" + this.config.getArcadeConfig().getTriviaChannelId()+  "> channel!", 30000);
         }
     }

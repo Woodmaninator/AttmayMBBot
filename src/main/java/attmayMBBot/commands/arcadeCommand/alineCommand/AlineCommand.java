@@ -6,6 +6,8 @@ import attmayMBBot.functionalities.arcade.ArcadeGameManager;
 import attmayMBBot.functionalities.arcade.aline.EAlineDifficulty;
 import attmayMBBot.functionalities.popupMessageHandling.PopupMessageHandler;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 public class AlineCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -15,14 +17,14 @@ public class AlineCommand implements ICommand {
         this.arcadeGameManager = arcadeGameManager;
     }
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         //Check if command was sent in the right channel
-        if(message.getChannel().block().getId().asLong() == this.config.getArcadeConfig().getAlineChannelId()) {
+        if(channel.getId().asLong() == this.config.getArcadeConfig().getAlineChannelId()) {
             EAlineDifficulty difficulty = EAlineDifficulty.EASY;
             if (args.length > 1) {
                 //if the second argument is "tutorial"
                 if (args[1].toLowerCase().equals("tutorial")) {
-                    message.getChannel().block().createMessage("Move the red line to the blue target using the arrow reactions.\n" +
+                    channel.createMessage("Move the red line to the blue target using the arrow reactions.\n" +
                             "The line will move until it hits a wall or the end of the board. The line will also stop if it collides with itself.\n" +
                             "Be careful not to hit any :skull: as they may result in a minor case of instant death.").block();
                     return;
@@ -40,9 +42,9 @@ public class AlineCommand implements ICommand {
                         break;
                 }
             }
-            this.arcadeGameManager.addAlineArcadeGameInstance(message, message.getAuthor().get().getId().asLong(), difficulty);
+            this.arcadeGameManager.addAlineArcadeGameInstance(channel, sender, difficulty);
         } else {
-            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(message,  message.getAuthor().get().getMention() +
+            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(channel,  sender.getMention() +
                     " You can only use this command in the <#" + this.config.getArcadeConfig().getAlineChannelId()+  "> channel!", 30000);
         }
     }

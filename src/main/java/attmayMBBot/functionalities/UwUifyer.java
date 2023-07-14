@@ -6,7 +6,7 @@ import java.util.Random;
 public class UwUifyer {
     //In advance to writing this class, I just want to clarify that I am extremely sorry.
     //What I am doing may be wrong, but it has to be done.
-    //Who the fuck am I kidding? It does not have to be done. No one asked me to do this. It was my own decision and yet i am pretending to care about the feelings
+    //Who the fuck am I kidding? It does not have to be done. No one asked me to do this. It was my own decision, and yet I am pretending to care about the feelings
     //of myself or the feelings of other people. This is horrible. Not a single soul deserves this destiny. No matter how clean/efficient this code is going to end up
     //(Let's be real for a moment - it probably sucks ass) this will end up being the worst file in the whole project.
 
@@ -86,7 +86,7 @@ public class UwUifyer {
         return stringBuilder.toString();
     }
     private char changeCharIfNecessary(char c){
-        //Shit method but i don't give a fuck tbh
+        //Shit method but I don't give a fuck tbh
         if(c == 'l' || c == 'r')
             return 'w';
         if(c == 'L' || c == 'R')
@@ -94,7 +94,7 @@ public class UwUifyer {
         return c;
     }
     //The name for this method is actually not that good because it doesn't match the naming-conventions for a method that returns a boolean
-    //However, I chose this name so i can just write:
+    //However, I chose this name, so I can just write:
     //if(thisCharIsPartOfTheAlphabet('x'))
     //Which makes sense from a grammatical point of view and also is very funny
     private boolean thisCharIsPartOfTheAlphabet(char c){

@@ -5,6 +5,7 @@ import attmayMBBot.functionalities.arcade.ArcadeManager;
 import attmayMBBot.functionalities.arcade.ArcadeUser;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -18,10 +19,10 @@ public class AlineArcadeGameInstance extends AArcadeGameInstance {
     private AlineGame game;
     private boolean timeRanOut;
 
-    public AlineArcadeGameInstance(ArcadeManager arcadeManager, Message message, Long contestantId, EAlineDifficulty difficulty) {
-        super(arcadeManager, message, 5L * 60L * 1000L); //5 minutes duration
-        this.authorMention = message.getAuthor().get().getMention();
-        this.contestantId = contestantId;
+    public AlineArcadeGameInstance(ArcadeManager arcadeManager, MessageChannel channel, User user, EAlineDifficulty difficulty) {
+        super(arcadeManager, channel, 5L * 60L * 1000L); //5 minutes duration
+        this.authorMention = user.getMention();
+        this.contestantId = user.getId().asLong();
         this.game = new AlineGame(difficulty);
         this.gameSemaphore = new Semaphore(1);
         this.timeRanOut = false;
@@ -62,7 +63,7 @@ public class AlineArcadeGameInstance extends AArcadeGameInstance {
         //Check if the user from the reaction is the same as the contestant ID
         try {
             if(user.getId().asLong() == this.contestantId) {
-                //acqurie semaphore so only one reaction can be handled at a time
+                //acquire semaphore so only one reaction can be handled at a time
                 this.gameSemaphore.acquire();
 
                 //Check for movement reactions
@@ -95,7 +96,7 @@ public class AlineArcadeGameInstance extends AArcadeGameInstance {
                     //do shit here
                     //remove the reaction from the user that made it
                     this.getInstanceMessage().removeReaction(emoji, user.getId()).block();
-                    //Checking for a win/gameover is done in the move method itself!
+                    //Checking for a win/game-over is done in the move method itself!
                     //Update the message
                     this.updateGameMessage();
                 }

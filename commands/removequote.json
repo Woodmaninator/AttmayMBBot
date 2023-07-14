@@ -1,0 +1,13 @@
+{
+  "name": "removequote",
+  "type": 1,
+  "description" : "Removes a quote from the system. If no id is specified, the previous quote will be removed.",
+  "options": [
+    {
+      "name": "id",
+      "description": "id of the quote you want to remove (empty for latest quote)",
+      "type": 4,
+      "required": false
+    }
+  ]
+}

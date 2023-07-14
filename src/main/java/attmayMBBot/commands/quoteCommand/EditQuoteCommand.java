@@ -5,51 +5,50 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import javafx.util.Pair;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-public class FixQuoteCommand implements ICommand {
+public class EditQuoteCommand implements ICommand {
 
     private AttmayMBBotConfig config;
     private QuoteManager quoteManager;
     private QuoteIDManager quoteIDManager;
 
-    public FixQuoteCommand(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteIDManager quoteIDManager) {
+    public EditQuoteCommand(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteIDManager quoteIDManager) {
         this.config = config;
         this.quoteManager = quoteManager;
         this.quoteIDManager = quoteIDManager;
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorizer = new AdvancedBotUserAuthorization(this.config); // authorized user check
 
         // check for user permissions
-        if (!authorizer.checkIfUserIsAuthorized(message.getAuthor().get())) {
-            message.getChannel().block().createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
+        if (!authorizer.checkIfUserIsAuthorized(sender)) {
+            channel.createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
             return;
         }
 
         // check for existing quotes
         if (quoteManager.getAllQuotesSortedByIssuedDate().size() <= 0) {
-            message.getChannel().block().createMessage("There are no quotes in the system yet.").block();
+            channel.createMessage("There are no quotes in the system yet.").block();
             return;
         }
 
         // check for correct amount of arguments
         if (args.length < 2) {
-            message.getChannel()
-                    .block().createMessage("This command feels incomplete.\nUse !editquote [QuoteID] [NewQuoteText]\nor !editquote [NewQuoteText] instead.")
-                    .block();
+            channel.createMessage("This command feels incomplete.\nUse /editquote [QuoteID] [NewQuoteText]\nor /editquote [NewQuoteText] instead. (The second one will edit the latest quote.)").block();
             return;
         }
 
         Optional<Pair<Long, String>> opt_quoteData = parseCommandArguments(args);
         if (!opt_quoteData.isPresent()) {
-            message.getChannel().block().createMessage("Failed to edit quote: could not infer command variant (no valid QuoteID found)").block();
+            channel.createMessage("Failed to edit quote: could not infer command variant (no valid QuoteID found)").block();
             return;
         }
 
@@ -57,23 +56,23 @@ public class FixQuoteCommand implements ICommand {
 
         // check if the quote exists
         if (quoteData.getKey() > quoteIDManager.getLastQuoteId()) {
-            message.getChannel().block().createMessage("Woah! That quote's from the future! :open_mouth:").block();
+            channel.createMessage("Woah! That quote's from the future! :open_mouth:").block();
             return;
         } else if (quoteData.getKey() < 0) {
-            message.getChannel().block().createMessage("Are you serious?? :face_with_raised_eyebrow:").block();
+            channel.createMessage("Are you serious?? :face_with_raised_eyebrow:").block();
             return;
         } else if (quoteData.getKey().equals(0L)) {
-            message.getChannel().block().createMessage("Quote IDs start from 1. Are you trying to modify history??").block();
+            channel.createMessage("Quote IDs start from 1. Are you trying to modify history??").block();
             return;
         }
 
         if (!quoteManager.modifyQuoteText(quoteData.getKey(), quoteData.getValue())) {
-            message.getChannel().block().createMessage("Failed to edit quote: quote not find.").block();
+            channel.createMessage("Failed to edit quote: quote not find.").block();
             return;
         }
 
         quoteManager.saveQuotesToFile();
-        message.getChannel().block().createMessage(String.format("Quote #%s successfully fixed to %s!\n", quoteData.getKey(), quoteData.getValue())).block();
+        channel.createMessage(String.format("Quote #%s successfully fixed to %s!\n", quoteData.getKey(), quoteData.getValue())).block();
     }
 
     private Optional<Pair<Long, String>> parseCommandArguments(String[] args) {

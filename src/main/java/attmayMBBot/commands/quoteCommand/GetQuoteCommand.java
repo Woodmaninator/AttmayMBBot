@@ -6,7 +6,7 @@ import attmayMBBot.functionalities.quoteManagement.Quote;
 import attmayMBBot.functionalities.quoteManagement.QuoteAuthor;
 import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 import javafx.util.Pair;
 
@@ -26,13 +26,13 @@ public class GetQuoteCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         if (args.length == 1) { // default, old behaviour
-            printRandomQuote(message.getChannel().block());
+            printRandomQuote(channel);
             return;
         }
 
-        printQuoteFromIDString(message.getChannel().block(), args[1]);
+        printQuoteFromIDString(channel, args[1]);
     }
 
     private void printRandomQuote(MessageChannel channel) {

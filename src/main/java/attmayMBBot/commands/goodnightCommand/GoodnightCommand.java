@@ -7,6 +7,8 @@ import attmayMBBot.util.EWordQueryMode;
 import attmayMBBot.util.EWordType;
 import attmayMBBot.util.WordObject;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class GoodnightCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         EWordQueryMode wordQueryMode = EWordQueryMode.ADJECTIVE;
         String searchTerm = "";
         Random random = new Random();
@@ -58,12 +60,12 @@ public class GoodnightCommand implements ICommand {
         }
 
         if (finalWordObjectList.size() == 0)
-            message.getChannel().block().createMessage("There are no words. Sorry. Goodnight!").block();
+           channel.createMessage("There are no words. Sorry. Goodnight!").block();
         else {
             String finalWord = finalWordObjectList.get(random.nextInt(finalWordObjectList.size())).getTerm();
             if (wordQueryMode == EWordQueryMode.NOUN_BASED_ADJECTIVE)
                 finalWord = finalWord + "-" + this.config.getGoodnightConfig().getCompoundModifierList().get(random.nextInt(this.config.getGoodnightConfig().getCompoundModifierList().size()));
-            message.getChannel().block().createMessage("I'm afraid it's that time. I hope you all have a " + finalWord + " " + weekday + " night and an even better " + weekdayTomorrow + ". Goodnight!").block();
+            channel.createMessage("I'm afraid it's that time. I hope you all have a " + finalWord + " " + weekday + " night and an even better " + weekdayTomorrow + ". Goodnight!").block();
         }
     }
     private String getWeekdayForAttmayTimezone(long offset){

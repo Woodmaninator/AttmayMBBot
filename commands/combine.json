@@ -1,0 +1,19 @@
+{
+    "name": "combine",
+    "type": 1,
+    "description": "Posts an image of two combined emojis.",
+    "options": [ 
+        {
+            "name": "emoji1",
+            "description": "The first emoji.",
+            "type": 3,
+            "required": true
+        },
+        {
+            "name": "emoji2",
+            "description": "The second emoji.",
+            "type": 3,
+            "required": true
+        }
+    ]
+}

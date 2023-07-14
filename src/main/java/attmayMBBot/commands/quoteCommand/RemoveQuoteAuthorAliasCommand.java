@@ -5,7 +5,8 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteAuthor;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 import java.util.Optional;
 
@@ -21,25 +22,19 @@ public class RemoveQuoteAuthorAliasCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorization = new AdvancedBotUserAuthorization(config);
         String alias;
 
         // authorized user check
-        if (!authorization.checkIfUserIsAuthorized(message.getAuthor().get())) {
-            message.getChannel()
-                    .block()
-                    .createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.")
-                    .block();
+        if (!authorization.checkIfUserIsAuthorized(sender)) {
+            channel.createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
             return;
         }
 
         // check argument count
         if (args.length < 2) {
-            message.getChannel()
-                    .block()
-                    .createMessage("This command feels incomplete.\nUse !removealias [Alias] instead.")
-                    .block();
+            channel.createMessage("This command feels incomplete.\nUse /removealias [Alias] instead.").block();
             return;
         }
 
@@ -48,10 +43,7 @@ public class RemoveQuoteAuthorAliasCommand implements ICommand {
 
         Optional<QuoteAuthor> opt_aliasOwner = removeAlias(alias);
         if (!opt_aliasOwner.isPresent()) {
-            message.getChannel()
-                    .block()
-                    .createMessage("Who? :face_with_raised_eyebrow:")
-                    .block();
+            channel.createMessage("Who? :face_with_raised_eyebrow:").block();
             return;
         }
 
@@ -59,10 +51,7 @@ public class RemoveQuoteAuthorAliasCommand implements ICommand {
         quoteManager.saveQuotesToFile();
 
         // report success
-        message.getChannel()
-                .block()
-                .createMessage(String.format("Successfully removed %s's alias \"%s\"", opt_aliasOwner.get().getName(), alias))
-                .block();
+        channel.createMessage(String.format("Successfully removed %s's alias \"%s\"", opt_aliasOwner.get().getName(), alias)).block();
     }
 
     private Optional<QuoteAuthor> removeAlias(String alias) {

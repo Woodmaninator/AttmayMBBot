@@ -5,17 +5,23 @@ import attmayMBBot.functionalities.arcade.ArcadeGameManager;
 import attmayMBBot.functionalities.arcade.ArcadeManager;
 import attmayMBBot.functionalities.emojiKitchen.EmojiCombinationHandler;
 import attmayMBBot.functionalities.emojiKitchen.EmojiKitchenHandler;
+import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
+import attmayMBBot.messageInterpreters.CommandInterpreter;
 import attmayMBBot.messageInterpreters.MessageInterpreter;
 import attmayMBBot.reactionInterpreters.ReactionInterpreter;
 import com.google.gson.Gson;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
+import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.event.domain.message.ReactionAddEvent;
+import discord4j.core.object.command.ApplicationCommandInteractionOption;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 import java.io.FileReader;
 import java.io.Reader;
@@ -54,6 +60,7 @@ public class AttmayMBBotMain {
         QuoteRankingManager quoteRankingManager = new QuoteRankingManager(quoteManager, quoteRankingResults);
 
         MessageInterpreter messageInterpreter = new MessageInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, quoteQuizManager, arcadeGameManager);
+        CommandInterpreter commandInterpreter = new CommandInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager, arcadeGameManager);
         ReactionInterpreter reactionInterpreter = new ReactionInterpreter(config, quoteQuizManager, quoteRankingManager, arcadeGameManager);
 
         //Event gets fired when the bot receives a message (private or in a text channel)
@@ -64,6 +71,30 @@ public class AttmayMBBotMain {
         //Event gets fired when the bot receives a reaction (in a text channel)
         gateway.on(ReactionAddEvent.class).subscribe(event -> {
             reactionInterpreter.interpretAddedReaction(event.getUser().block(), event.getMessage().block(), event.getEmoji());
+        });
+
+        //Handle slash commands
+        gateway.on(ChatInputInteractionEvent.class).subscribe(event -> {
+            //transform all the options into an old-school command
+            //   /quote 1 -> !quote 1
+            StringBuilder command = new StringBuilder();
+            command.append(event.getCommandName());
+            for(ApplicationCommandInteractionOption option : event.getOptions()){
+                if(option.getValue().isPresent()) {
+                    command.append(" ");
+                    command.append(option.getValue().get().getRaw());
+                }
+            }
+
+            //respond that the command is being executed
+            event.reply("Executing the following command:\n/" + command).block();
+
+            //Get the channel and the user
+            MessageChannel channel = event.getInteraction().getChannel().block();
+            User sender = event.getInteraction().getUser();
+
+            //Forward the command, the channel and the sender to the command interpreter
+            commandInterpreter.interpretCommand(command.toString(), sender, channel);
         });
 
         //Start the update loop for the quote quiz manager

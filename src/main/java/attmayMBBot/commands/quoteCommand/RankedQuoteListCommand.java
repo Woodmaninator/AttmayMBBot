@@ -7,7 +7,8 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteDuel;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingStats;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 import javafx.util.Pair;
 
@@ -26,7 +27,7 @@ public class RankedQuoteListCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(String[] args, User sender, MessageChannel channel) {
         int count = 10; //The default number of quotes to show
         String authorName = ""; //Default author name aka everyone
         //Second argument is the number of quotes to show
@@ -42,6 +43,7 @@ public class RankedQuoteListCommand implements ICommand {
                         count = Integer.parseInt(args[2]);
                     }catch(NumberFormatException e2) {
                         //eh. not that important
+                        //count stays default value
                     }
                 }
             }
@@ -55,7 +57,7 @@ public class RankedQuoteListCommand implements ICommand {
             if(quoteManager.checkIfQuoteAuthorNameExists(authorName)){
                 quotes = quoteManager.getAllQuotesFromAuthorSortedByIssuedDate(authorName);
             }else{
-                message.getChannel().block().createMessage("Your specified author name does not exist!").block();
+                channel.createMessage("Your specified author name does not exist!").block();
                 return;
             }
         } else {
@@ -130,7 +132,7 @@ public class RankedQuoteListCommand implements ICommand {
             embedDescriptions.add(sb.toString());
         //Just yeet them out there
         for (String embedDescription : embedDescriptions) {
-            message.getChannel().block().createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
+            channel.createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
         }
     }
 }

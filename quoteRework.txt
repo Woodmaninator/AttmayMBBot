@@ -22,7 +22,7 @@ When adding quotes or anything: ignore upper/lower case
 Adding a quote:
     !addquote [Authorname or any alias for that author] [Year] [QuoteText]
         Example: !addquote inflame 2018 "This is a quote"
-        Some quotes involving 2 ppl have to be slightly reworked. But these are an exception so I do not care.
+        Some quotes involving 2 ppl have to be slightly reworked. But these are an exception, so I do not care.
         Authorized User only!
 
     !quotelist

@@ -1,0 +1,19 @@
+{
+  "name": "goodnight",
+  "type": 1,
+  "description" : "Prints an attmayMB-certified goodnight message.",
+  "options": [
+    {
+      "name": "argument1",
+      "description": "Either a related noun or the character 'n'",
+      "type": 3,
+      "required": false
+    },
+    {
+      "name": "argument2",
+      "description": "Has to be 'n'. The previous word is a topic for the message.",
+      "type": 3,
+      "required": false
+    }
+  ]
+}
