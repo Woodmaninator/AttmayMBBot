@@ -92,15 +92,20 @@ public class RankedQuoteListCommand implements ICommand {
         }
 
         //All quotes have stats now. It is time to sort them now
-
+        //Sort by win ratio if possible, otherwise sort by wins, otherwise sort by losses
         stats.sort( (x,y) -> {
-           if(x.getWins() != y.getWins())
-               return y.getWins() - x.getWins();
-           else if(x.getLosses() != y.getLosses())
-               return x.getLosses() - y.getLosses();
-           else if(x.getDraws() != y.getDraws())
-               return y.getDraws() - x.getDraws();
-           return 0;
+            int lossesX = x.getLosses() == 0 ? 1 : x.getLosses();
+            int lossesY = y.getLosses() == 0 ? 1 : y.getLosses();
+
+            double ratioX = (double)x.getWins() / (double)lossesX;
+            double ratioY = (double)y.getWins() / (double)lossesY;
+
+            if(ratioX != ratioY)
+                return (int)(ratioY - ratioX);
+            else if(x.getWins() != y.getWins())
+                return y.getWins() - x.getWins();
+            else
+                return x.getLosses() - y.getLosses();
         });
 
         if(count < 1)
