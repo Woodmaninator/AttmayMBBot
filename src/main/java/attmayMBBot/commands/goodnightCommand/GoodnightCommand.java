@@ -10,10 +10,7 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GoodnightCommand implements ICommand {
@@ -23,22 +20,18 @@ public class GoodnightCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         EWordQueryMode wordQueryMode = EWordQueryMode.ADJECTIVE;
         String searchTerm = "";
         Random random = new Random();
         //Get the arguments and other shit
-        if (args.length == 2) {
-            if (args[1].equals("n"))
-                wordQueryMode = EWordQueryMode.NOUN_BASED_ADJECTIVE;
-            else
-                searchTerm = args[1].toLowerCase();
-        }
-        if (args.length == 3) {
-            searchTerm = args[1].toLowerCase();
-            if (args[2].equals("n"))
+        if(args.containsKey("compound-word")){
+            if(args.get("compound-word").equalsIgnoreCase("true"))
                 wordQueryMode = EWordQueryMode.NOUN_BASED_ADJECTIVE;
         }
+
+        if(args.containsKey("keyword"))
+            searchTerm = args.get("keyword");
 
         //Get the current weekday and the weekday tomorrow
         String weekday = getWeekdayForAttmayTimezone(0);

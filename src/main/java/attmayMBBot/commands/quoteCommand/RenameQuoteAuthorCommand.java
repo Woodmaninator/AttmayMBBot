@@ -8,6 +8,8 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 // intended command usage: !renameauthor [current name] [new name]
 
 public class RenameQuoteAuthorCommand implements ICommand {
@@ -20,7 +22,7 @@ public class RenameQuoteAuthorCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorization = new AdvancedBotUserAuthorization(config);
         String currentAuthorName;
         String newAuthorName;
@@ -31,13 +33,14 @@ public class RenameQuoteAuthorCommand implements ICommand {
             return;
         }
 
-        // check argument count
-        if (args.length < 3) {
+        // check argument existence
+        if (!args.containsKey("old-name") || !args.containsKey("new-name")) {
             channel.createMessage("This command feels incomplete.\nUse /renameauthor [Author username] [New author name] instead.").block();
             return;
         }
-        currentAuthorName = args[1];
-        newAuthorName = args[2];
+
+        currentAuthorName = args.get("old-name");
+        newAuthorName = args.get("new-name");
 
         // find author by name
         QuoteAuthor author = quoteManager.getAuthorFromName(currentAuthorName);

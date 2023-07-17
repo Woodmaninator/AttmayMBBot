@@ -14,6 +14,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RankedQuoteListCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -27,26 +28,21 @@ public class RankedQuoteListCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         int count = 10; //The default number of quotes to show
         String authorName = ""; //Default author name aka everyone
         //Second argument is the number of quotes to show
-        if(args.length > 1){
-            try{
-                count = Integer.parseInt(args[1]);
-            }catch (NumberFormatException e){
-                //not a number (obviously), so the second argument is the author name
-                authorName = args[1];
-                if(args.length > 2){
-                    //third argument could be the number of quotes to show (if the second argument was the author name)
-                    try{
-                        count = Integer.parseInt(args[2]);
-                    }catch(NumberFormatException e2) {
-                        //eh. not that important
-                        //count stays default value
-                    }
-                }
+        if(args.containsKey("count")) {
+            try {
+                count = Integer.parseInt(args.get("count"));
+            } catch(Exception ex) {
+                //default to 10
+                count = 10;
             }
+        }
+
+        if(args.containsKey("author")){
+            authorName = args.get("author");
         }
 
         List<QuoteRankingStats> stats = new ArrayList<>();

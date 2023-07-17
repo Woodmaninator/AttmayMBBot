@@ -4,15 +4,15 @@
   "description" : "Edits a quote in the system. If no id is specified, the previous quote will be edited.",
   "options": [
     {
-      "name": "argument1",
-      "description": "new quote text if you want to edit the latest quote, id of quote otherwise",
+      "name": "text",
+      "description": "the new text of the quote",
       "type": 3,
       "required": true
     },
     {
-      "name": "argument2",
-      "description": "the new quote text",
-      "type": 3,
+      "name": "id",
+      "description": "the id of the quote you want to edit",
+      "type": 4,
       "required": false
     }
   ]

@@ -10,6 +10,8 @@ import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 
+import java.util.Map;
+
 public class DinnerpostCommand implements ICommand {
     private AttmayMBBotConfig config;
 
@@ -18,13 +20,13 @@ public class DinnerpostCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
             Recipe recipe = null;
-            if(args.length <= 1)
+            if(!args.containsKey("keyword"))
                 recipe = new SpoonacularAPIHandler(this.config).getRandomRecipe();
             else
-                recipe = new SpoonacularAPIHandler(this.config).getRandomRecipe(args[1]);
+                recipe = new SpoonacularAPIHandler(this.config).getRandomRecipe(args.get("keyword"));
             if(recipe != null) {
                 String embedDescription = "I made " + recipe.getTitle() + " today and it turned out pretty well.\nIf you want to try this recipe for yourself you can go check it out here:\n" + recipe.getRecipeUrl();
                 String embedTitle = recipe.getTitle();

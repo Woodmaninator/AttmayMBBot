@@ -1,9 +1,7 @@
 {
-  "token":"12345",
-  "spoonacularApiKey":"12345",
-  "authorizedRoleID":12345,
-  "guildID":12345,
-  "quoteRankingChannelID": 12345,
+  "authorizedRoleID":849943343861465120,
+  "guildID":849941053373153280,
+  "quoteRankingChannelID": 1017090993746624593,
   "goodnightConfig": {
     "compoundModifierList":[
       "filled",
@@ -15,8 +13,8 @@
       "infused"]
   },
   "arcadeConfig": {
-    "generalArcadeChannelId": 12345,
-    "alineChannelId": 12345,
-    "triviaChannelId": 12345
+    "generalArcadeChannelId": 1006100550753992744,
+    "alineChannelId": 1006100605753905233,
+    "triviaChannelId": 1007027783676993586
   }
 }

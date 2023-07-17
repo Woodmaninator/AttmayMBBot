@@ -7,6 +7,8 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 // intended command usage: !removeauthor [author name]
 
 public class RemoveQuoteAuthorCommand implements ICommand {
@@ -19,7 +21,7 @@ public class RemoveQuoteAuthorCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorization = new AdvancedBotUserAuthorization(config);
         String authorName;
 
@@ -30,13 +32,13 @@ public class RemoveQuoteAuthorCommand implements ICommand {
         }
 
         // check argument count
-        if (args.length < 2) {
+        if (!args.containsKey("authorname")) {
             channel.createMessage("This command feels incomplete.\nUse /removeauthor [Author username] instead.").block();
             return;
         }
 
         // get author name
-        authorName = args[1];
+        authorName = args.get("authorname");
 
         // attempt remove author
         if (!quoteManager.getQuoteAuthors().removeIf(author -> author.getName().equalsIgnoreCase(authorName))) {

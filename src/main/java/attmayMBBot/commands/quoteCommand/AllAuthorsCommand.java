@@ -11,6 +11,7 @@ import discord4j.rest.util.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AllAuthorsCommand implements ICommand {
@@ -26,7 +27,7 @@ public class AllAuthorsCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         List<QuoteAuthor> authorList;
         List<String> embedDescriptions = new ArrayList<>();
         String embedTitle = "List of all Quote Authors";
@@ -45,16 +46,16 @@ public class AllAuthorsCommand implements ICommand {
         authorList = quoteManager.getQuoteAuthors().stream().sorted(this.authorComparator).collect(Collectors.toList());
 
         // check if there is an author count provided
-        if (args.length > 1) {
-            if (args[1].equalsIgnoreCase("top")) {
+        if (args.containsKey("count")) {
+            if (args.get("ranking").equalsIgnoreCase("true")) {
                 // command is !authorlist top [place]
-                if (args.length < 3) {
-                            channel.createMessage("This command feels incomplete.\nUse /authorlist top [place] instead.").block();
+                if (!args.containsKey("count")) {
+                        channel.createMessage("This command feels incomplete.\ncount is required when enabling ranking.").block();
                     return;
                 }
                 // parse the [place] in !authorlist top [place]
                 try {
-                    maxPlaceCount = Math.min(Integer.parseInt(args[2]), maxPlaceCount);
+                    maxPlaceCount = Math.min(Integer.parseInt(args.get("count")), maxPlaceCount);
 
                     if (maxPlaceCount <= 0) {
                         // invalid count
@@ -69,7 +70,7 @@ public class AllAuthorsCommand implements ICommand {
             } else {
                 // command is !authorlist [count]
                 try {
-                    maxAuthorsCount = Math.min(Integer.parseInt(args[1]), maxAuthorsCount);
+                    maxAuthorsCount = Math.min(Integer.parseInt(args.get("count")), maxAuthorsCount);
 
                     if (maxAuthorsCount <= 0) {
                         // invalid count

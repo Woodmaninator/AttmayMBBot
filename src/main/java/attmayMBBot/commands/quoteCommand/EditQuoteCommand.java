@@ -10,6 +10,7 @@ import discord4j.core.object.entity.channel.MessageChannel;
 import javafx.util.Pair;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
 
 public class EditQuoteCommand implements ICommand {
@@ -25,7 +26,7 @@ public class EditQuoteCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorizer = new AdvancedBotUserAuthorization(this.config); // authorized user check
 
         // check for user permissions
@@ -41,7 +42,7 @@ public class EditQuoteCommand implements ICommand {
         }
 
         // check for correct amount of arguments
-        if (args.length < 2) {
+        if (!args.containsKey("text")) {
             channel.createMessage("This command feels incomplete.\nUse /editquote [QuoteID] [NewQuoteText]\nor /editquote [NewQuoteText] instead. (The second one will edit the latest quote.)").block();
             return;
         }
@@ -75,26 +76,25 @@ public class EditQuoteCommand implements ICommand {
         channel.createMessage(String.format("Quote #%s successfully fixed to %s!\n", quoteData.getKey(), quoteData.getValue())).block();
     }
 
-    private Optional<Pair<Long, String>> parseCommandArguments(String[] args) {
+    private Optional<Pair<Long, String>> parseCommandArguments(Map<String, String> args) {
         Long quoteID = 0L;
         String newQuoteString = "";
 
-        if (args[1].startsWith("\"")) { // is immediately a quote
+        if(args.containsKey("id")){
+            try{
+                quoteID = Long.parseLong(args.get("id"));
+            } catch (Exception e){
+                return Optional.empty();
+            }
+        } else {
             quoteID = quoteIDManager.getLastQuoteId();
-            newQuoteString = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-
-            return Optional.of(new Pair<>(quoteID, newQuoteString));
         }
 
-        // if it doesn't start with a quote, it must contain an ID.
-        try {
-            quoteID = Long.parseLong(args[1]);
-        } catch (Exception e) {
-            return Optional.empty();
+        if(args.containsKey("text")){
+            newQuoteString = args.get("text");
+        } else {
+            newQuoteString = "";
         }
-
-        // string together the arguments
-        newQuoteString = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
         return Optional.of(new Pair(quoteID, newQuoteString));
     }

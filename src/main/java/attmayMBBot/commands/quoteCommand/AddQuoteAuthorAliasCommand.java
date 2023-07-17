@@ -8,6 +8,8 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class AddQuoteAuthorAliasCommand implements ICommand {
     private AttmayMBBotConfig config;
     private QuoteManager quoteManager;
@@ -18,12 +20,12 @@ public class AddQuoteAuthorAliasCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
-            if(args.length == 3){
-                String quoteAuthorName = args[1];
-                String newAlias = args[2];
+            if(!args.containsKey("author") || !args.containsKey("alias")){
+                String quoteAuthorName = args.get("author");
+                String newAlias = args.get("alias");
 
                 if(this.quoteManager.checkIfQuoteAuthorNameExists(quoteAuthorName)){
                     //user exists, try to add the alias

@@ -8,6 +8,8 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class RemoveQuoteCommand implements ICommand {
 
     private AttmayMBBotConfig config;
@@ -21,7 +23,7 @@ public class RemoveQuoteCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         Long quoteID = quoteIDManager.getLastQuoteId(); // id of quote to remove (defaults to last quote ID)
         AdvancedBotUserAuthorization authorizer = new AdvancedBotUserAuthorization(this.config); // authorized user check
 
@@ -38,9 +40,9 @@ public class RemoveQuoteCommand implements ICommand {
         }
 
         // specific case: remove specific quote
-        if (args.length > 1) {
+        if (args.containsKey("id")) {
             try {
-                quoteID = Long.parseLong(args[1]);
+                quoteID = Long.parseLong(args.get("id"));
             } catch (Exception e) {
                 channel.createMessage("That's not a valid Quote ID! :rolling_eyes:").block();
                 return;

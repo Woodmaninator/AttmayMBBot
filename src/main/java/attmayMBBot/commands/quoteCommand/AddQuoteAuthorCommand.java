@@ -8,6 +8,8 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class AddQuoteAuthorCommand implements ICommand {
     private AttmayMBBotConfig config;
     private QuoteManager quoteManager;
@@ -18,12 +20,12 @@ public class AddQuoteAuthorCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
-            if(args.length == 3){
-                String quoteAuthorName = args[1];
-                String discordIdString = args[2];
+            if(!args.containsKey("name") || !args.containsKey("user-id")){
+                String quoteAuthorName = args.get("name");
+                String discordIdString = args.get("user-id");
                 Long discordId = 0L;
 
                 //I'm too lazy to look for an equivalent method of TryParse in Java, so I'm just going to use a try/catch block

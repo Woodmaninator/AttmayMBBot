@@ -1,0 +1,5 @@
+{
+  "name": "highscore",
+  "type": 1,
+  "description": "Prints the highscore of the arcade."
+}

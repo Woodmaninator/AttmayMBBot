@@ -10,6 +10,8 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class TriviaCommand implements ICommand {
     private AttmayMBBotConfig config;
     private ArcadeGameManager arcadeGameManager;
@@ -20,11 +22,11 @@ public class TriviaCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         if(channel.getId().asLong() == this.config.getArcadeConfig().getTriviaChannelId()) {
             ETriviaDifficulty difficulty = ETriviaDifficulty.EASY;
-            if (args.length > 1) {
-                switch (args[1].toLowerCase()) {
+            if (args.containsKey("difficulty")) {
+                switch (args.get("difficulty").toLowerCase()) {
                     case "easy":
                         difficulty = ETriviaDifficulty.EASY;
                         break;

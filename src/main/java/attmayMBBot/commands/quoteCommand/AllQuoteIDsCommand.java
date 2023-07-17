@@ -11,6 +11,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AllQuoteIDsCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -21,16 +22,16 @@ public class AllQuoteIDsCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         StringBuilder sb = new StringBuilder();
         List<Pair<String,Quote>> quoteList = null;
         String embedTitle = "List of all Quotes and their IDs";
         List<String> embedDescriptions = new ArrayList<>();
 
-        if (args.length == 1) { // default case: print all the quotes
+        if (!args.containsKey("author")) { // default case: print all the quotes
             quoteList = quoteManager.getAllQuotesSortedByIssuedDate();
-        } else if (args.length > 1) { // special case: print quotes by a specific author
-            String authorName = args[1];
+        } else { // special case: print quotes by a specific author
+            String authorName = args.get("author");
             if (quoteManager.checkIfQuoteAuthorNameExists(authorName)) {
                 quoteList = quoteManager.getAllQuotesFromAuthorSortedByIssuedDate(authorName);
             } else {

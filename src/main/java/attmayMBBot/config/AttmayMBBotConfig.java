@@ -17,9 +17,11 @@ public class AttmayMBBotConfig {
     public String getToken(){
         return this.token;
     }
+    public void setToken(String token){ this.token = token; }
     public String getSpoonacularApiKey(){
         return this.spoonacularApiKey;
     }
+    public void setSpoonacularApiKey(String spoonacularApiKey) { this.spoonacularApiKey = spoonacularApiKey; }
     public long getAuthorizedRoleID(){
         return this.authorizedRoleID;
     }

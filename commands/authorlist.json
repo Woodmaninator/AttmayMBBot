@@ -4,15 +4,15 @@
     "description": "Lists authors sorted by number of quotes.",
     "options": [
         {
-            "name": "argument1",
-            "description": "The number of authors to feature or 'top'.",
-            "type": 3,
+            "name": "count",
+            "description": "the number of authors to feature",
+            "type": 4,
             "required": false
         },
         {
-            "name": "argument2",
-            "description": "Required count of authors after 'top'.",
-            "type": 4,
+            "name": "ranking",
+            "description": "displays the top n authors. requires the count argument",
+            "type": 5,
             "required": false
         }
     ]

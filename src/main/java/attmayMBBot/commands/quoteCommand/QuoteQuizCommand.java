@@ -6,6 +6,8 @@ import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class QuoteQuizCommand implements ICommand {
     private AttmayMBBotConfig config;
     private QuoteQuizManager quoteQuizManager;
@@ -16,7 +18,7 @@ public class QuoteQuizCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //ez
         this.quoteQuizManager.addQuoteQuizInstance(channel, sender);
     }

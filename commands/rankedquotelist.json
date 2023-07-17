@@ -4,14 +4,14 @@
     "description": "Lists the top 10 quotes from /rankquotes.",
     "options": [
         {
-            "name": "argument1",
-            "description": "The author whose ranked quotes to list or the count of quotes to show.",
+            "name": "author",
+            "description": "the author whose ranked quotes to list or the count of quotes to show",
             "type": 3,
             "required": false
         },
         {
-            "name": "argument2",
-            "description": "The count of quotes to show.",
+            "name": "count",
+            "description": "the count of quotes to show",
             "type": 4,
             "required": false
         }

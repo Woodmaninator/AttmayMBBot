@@ -7,6 +7,8 @@ import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class QuoteRankingCommand implements ICommand {
     private AttmayMBBotConfig config;
     private QuoteRankingManager quoteRankingManager;
@@ -17,7 +19,7 @@ public class QuoteRankingCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //Check if command was sent in the right channel
         if(channel.getId().asLong() == this.config.getQuoteRankingChannelID()) {
             this.quoteRankingManager.addQuoteRankingInstance(channel, sender);

@@ -16,6 +16,7 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ArcadeHighscoreCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -29,7 +30,7 @@ public class ArcadeHighscoreCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //CHeck if the message was sent in the right channel
         if(channel.getId().asLong() == this.config.getArcadeConfig().getGeneralArcadeChannelId()) {
             List<ArcadeUser> users = this.arcadeManager.getUsers();

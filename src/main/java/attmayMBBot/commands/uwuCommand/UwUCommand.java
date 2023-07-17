@@ -7,6 +7,8 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class UwUCommand implements ICommand {
     private AttmayMBBotConfig config;
 
@@ -15,13 +17,10 @@ public class UwUCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         String normalMessage = "";
-        if(args.length > 1) {
-            StringBuilder sb = new StringBuilder();
-            for(int i = 1; i < args.length; i++)
-                sb.append(args[i]).append(" ");
-            normalMessage = sb.toString();
+        if(args.containsKey("text")) {
+            normalMessage = args.get("text");
         }
         else {
             //Get the last message from that channel (excluding the one that is the command)

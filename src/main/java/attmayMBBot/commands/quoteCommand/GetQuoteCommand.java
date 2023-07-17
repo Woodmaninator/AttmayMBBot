@@ -11,6 +11,7 @@ import discord4j.core.object.entity.channel.MessageChannel;
 import javafx.util.Pair;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -26,13 +27,13 @@ public class GetQuoteCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
-        if (args.length == 1) { // default, old behaviour
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
+        if (!args.containsKey("id")) { // default, old behaviour
             printRandomQuote(channel);
             return;
         }
 
-        printQuoteFromIDString(channel, args[1]);
+        printQuoteFromIDString(channel, args.get("id"));
     }
 
     private void printRandomQuote(MessageChannel channel) {

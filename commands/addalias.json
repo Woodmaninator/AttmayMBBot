@@ -4,13 +4,13 @@
     "description": "Adds a new alias to an author.",
     "options": [
         {
-            "name": "authorname",
+            "name": "author",
             "description": "the name of the author",
             "type": 3,
             "required": true
         },
         {
-            "name": "newalias",
+            "name": "alias",
             "description": "the new alias for the author",
             "type": 3,
             "required": true

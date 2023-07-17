@@ -10,6 +10,7 @@ import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
 import java.util.Date;
+import java.util.Map;
 
 public class AddQuoteCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -23,35 +24,26 @@ public class AddQuoteCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
             //This code gets executed if the user is authorized
-            if(args.length > 3){
-                //This code only gets executed if they actually pass a name/alias, a year and a quote
-                StringBuilder sb = new StringBuilder();
-                //argument number 4 is the first part of the actual quote
-                for(int i = 3; i < args.length; i++)
-                    sb.append(args[i]).append(" ");
-                //remove the last space
-                if(sb.length() > 0)
-                    sb.deleteCharAt(sb.length() - 1);
-
+            if(!args.containsKey("author") || !args.containsKey("year") || !args.containsKey("quote")) {
                 //get the quote properties
                 Date nowDate = new Date();
-                String quoteAuthorName = args[1];
+                String quoteAuthorName = args.get("author");
 
                 //I'm too lazy to look for an equivalent method of TryParse in Java, so I'm just going to use a try/catch block
                 int quoteYear;
                 try {
-                    quoteYear = Integer.parseInt(args[2]);
+                    quoteYear = Integer.parseInt(args.get("year"));
                 } catch(Exception ex){
                     channel.createMessage("The year is not a valid number!").block();
                     return;
                 }
 
                 Long quoteId = this.quoteIDManager.getNextQuoteId();
-                String quoteText = sb.toString();
+                String quoteText = args.get("quote");
                 //make the new Quote object
                 Quote quote = new Quote(quoteId, quoteYear, quoteText, sender.getId().asLong(), nowDate);
                 //check if the quoteAuthorName exists

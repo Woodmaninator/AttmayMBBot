@@ -4,15 +4,15 @@
   "description" : "Prints an attmayMB-certified goodnight message.",
   "options": [
     {
-      "name": "argument1",
-      "description": "Either a related noun or the character 'n'",
+      "name": "keyword",
+      "description": "keyword for the message",
       "type": 3,
       "required": false
     },
     {
-      "name": "argument2",
-      "description": "Has to be 'n'. The previous word is a topic for the message.",
-      "type": 3,
+      "name": "compound-word",
+      "description": "whether the message should contain a compound word",
+      "type": 5,
       "required": false
     }
   ]

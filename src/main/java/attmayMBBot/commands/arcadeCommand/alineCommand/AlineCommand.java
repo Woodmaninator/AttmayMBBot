@@ -9,6 +9,8 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
+
 public class AlineCommand implements ICommand {
     private AttmayMBBotConfig config;
     private ArcadeGameManager arcadeGameManager;
@@ -17,20 +19,20 @@ public class AlineCommand implements ICommand {
         this.arcadeGameManager = arcadeGameManager;
     }
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //Check if command was sent in the right channel
         if(channel.getId().asLong() == this.config.getArcadeConfig().getAlineChannelId()) {
             EAlineDifficulty difficulty = EAlineDifficulty.EASY;
-            if (args.length > 1) {
+            if (args.containsKey("mode")) {
                 //if the second argument is "tutorial"
-                if (args[1].toLowerCase().equals("tutorial")) {
+                if (args.get("mode").toLowerCase().equals("tutorial")) {
                     channel.createMessage("Move the red line to the blue target using the arrow reactions.\n" +
                             "The line will move until it hits a wall or the end of the board. The line will also stop if it collides with itself.\n" +
                             "Be careful not to hit any :skull: as they may result in a minor case of instant death.").block();
                     return;
                 }
                 //if the second argument is not tutorial
-                switch (args[1].toLowerCase()) {
+                switch (args.get("mode").toLowerCase()) {
                     case "easy":
                         difficulty = EAlineDifficulty.EASY;
                         break;

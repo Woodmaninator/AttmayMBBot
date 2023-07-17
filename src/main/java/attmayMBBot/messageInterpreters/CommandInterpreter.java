@@ -22,10 +22,15 @@ import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
 import discord4j.core.GatewayDiscordClient;
+import discord4j.core.object.command.ApplicationCommandInteractionOption;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CommandInterpreter {
     private AttmayMBBotConfig config;
@@ -61,12 +66,17 @@ public class CommandInterpreter {
         this.commandMap.put("rankedquotelist", new RankedQuoteListCommand(config, quoteRankingResults, quoteManager));
         this.notFoundCommand = new NotFoundCommand();
     }
-    public void interpretCommand(String command, User sender, MessageChannel channel){
-        String[] args = command.split(" ");
+    public void interpretCommand(String commandName, List<ApplicationCommandInteractionOption> options, User sender, MessageChannel channel){
+        //Get all the command arguments and pass them into a map
+        Map<String, String> args = new TreeMap<>();
+        for(ApplicationCommandInteractionOption option : options)
+            if(option.getValue().isPresent())
+                args.put(option.getName(), option.getValue().get().asString());
+
         //Since the command interpreter is no longer executed within the message interpreter, exception handling needs to happen here too
         try{
             //Execute the command with the most sexy of all methods: getOrDefault
-            commandMap.getOrDefault(args[0].toLowerCase(), notFoundCommand).execute(args, sender, channel);
+            commandMap.getOrDefault(commandName.toLowerCase(), notFoundCommand).execute(args, sender, channel);
         } catch (Exception ex) {
             ex.printStackTrace();
             try { //Try to send a message to the channel, but if there's something wrong with the channel, that might not work either and break the entire bot

@@ -22,6 +22,7 @@ import discord4j.core.event.domain.message.ReactionAddEvent;
 import discord4j.core.object.command.ApplicationCommandInteractionOption;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
+import discord4j.core.spec.InteractionCallbackSpec;
 
 import java.io.FileReader;
 import java.io.Reader;
@@ -32,15 +33,21 @@ public class AttmayMBBotMain {
             Reader reader = new FileReader("AMBBConfig.json");
             AttmayMBBotConfig config = new Gson().fromJson(reader, AttmayMBBotConfig.class);
             reader.close();
+            config.setToken(System.getenv("AMBB_TOKEN"));
+            config.setSpoonacularApiKey(System.getenv("AMBB_SPOONACULAR_KEY"));
+
             reader = new FileReader("AMBBQuotes.json");
             QuoteManager quoteManager = new Gson().fromJson(reader, QuoteManager.class);
             reader.close();
+
             reader = new FileReader("AMBBQuoteRanking.json");
             QuoteRankingResults quoteRankingResults = new Gson().fromJson(reader, QuoteRankingResults.class);
             reader.close();
+
             reader = new FileReader("AMBBArcade.json");
             ArcadeManager arcadeManager = new Gson().fromJson(reader, ArcadeManager.class);
             reader.close();
+
             reader = new FileReader("EmojiKitchen.json");
             EmojiCombinationHandler emojiCombinationHandler = new Gson().fromJson(reader, EmojiCombinationHandler.class);
             EmojiKitchenHandler.setEmojiCombinationHandler(emojiCombinationHandler);
@@ -75,26 +82,22 @@ public class AttmayMBBotMain {
 
         //Handle slash commands
         gateway.on(ChatInputInteractionEvent.class).subscribe(event -> {
-            //transform all the options into an old-school command
-            //   /quote 1 -> !quote 1
-            StringBuilder command = new StringBuilder();
-            command.append(event.getCommandName());
-            for(ApplicationCommandInteractionOption option : event.getOptions()){
-                if(option.getValue().isPresent()) {
-                    command.append(" ");
-                    command.append(option.getValue().get().getRaw());
-                }
-            }
-
-            //respond that the command is being executed
-            event.reply("Executing the following command:\n/" + command).block();
+            //Delegate to the command interpreter to keep main clean
 
             //Get the channel and the user
             MessageChannel channel = event.getInteraction().getChannel().block();
             User sender = event.getInteraction().getUser();
 
+            StringBuilder replyBuilder = new StringBuilder();
+            replyBuilder.append("Executing the following command: " + event.getCommandName() + "\n");
+            for(ApplicationCommandInteractionOption option : event.getOptions()){
+                if(option.getValue().isPresent())
+                    replyBuilder.append("-" + option.getName() + ": " + option.getValue().get().toString() + "\n");
+            }
+
             //Forward the command, the channel and the sender to the command interpreter
-            commandInterpreter.interpretCommand(command.toString(), sender, channel);
+            event.reply("Executing the following command: " + event.getCommandName());
+
         });
 
         //Start the update loop for the quote quiz manager

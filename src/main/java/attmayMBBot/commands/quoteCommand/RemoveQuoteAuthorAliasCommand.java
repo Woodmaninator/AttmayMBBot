@@ -8,6 +8,7 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.Map;
 import java.util.Optional;
 
 // intended command usage: !removealias [author alias]
@@ -22,7 +23,7 @@ public class RemoveQuoteAuthorAliasCommand implements ICommand {
     }
 
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorization = new AdvancedBotUserAuthorization(config);
         String alias;
 
@@ -33,13 +34,13 @@ public class RemoveQuoteAuthorAliasCommand implements ICommand {
         }
 
         // check argument count
-        if (args.length < 2) {
+        if (args.containsKey("alias")) {
             channel.createMessage("This command feels incomplete.\nUse /removealias [Alias] instead.").block();
             return;
         }
 
         // get alias
-        alias = args[1];
+        alias = args.get("alias");
 
         Optional<QuoteAuthor> opt_aliasOwner = removeAlias(alias);
         if (!opt_aliasOwner.isPresent()) {

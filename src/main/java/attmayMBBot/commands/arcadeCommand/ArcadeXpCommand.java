@@ -11,6 +11,8 @@ import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
 
+import java.util.Map;
+
 public class ArcadeXpCommand implements ICommand {
     private AttmayMBBotConfig config;
     private ArcadeManager arcadeManager;
@@ -19,7 +21,7 @@ public class ArcadeXpCommand implements ICommand {
         this.arcadeManager = arcadeManager;
     }
     @Override
-    public void execute(String[] args, User sender, MessageChannel channel) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //Check if the message was sent in the right channel
         if(channel.getId().asLong() == this.config.getArcadeConfig().getGeneralArcadeChannelId()) {
             ArcadeUser user = null;
