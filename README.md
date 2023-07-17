@@ -10,13 +10,15 @@ We at Woodlabs® care about furthering research of artificial intelligence, bloc
 This bot is only meant to be used on one specific Discord server. It is a lot of work to get it running on another server, since you will have to host it yourself, but it is possible.
 In order to get this bot running you have to change a few things in the AMBBConfig.json file.
 
-* **token:** You have to replace the placeholder token (that is not working btw) with the token of your Discord Bot. You can get that token and find more information about it on the [Discord Developer Page](https://discord.com/developers/applications).
-* **spoonacularApiKey:** You have to replace the placeholder API-Key with your Spoonacular Food API Key. You can get this by signing up on the [Spoonacular API Page](https://spoonacular.com/food-api). Note that with the free version of this API you can only send a limited number of requests per day. So far this API is only used for the /dinnerpost command.
-* **authorizedRoleID:** You have to replace the placeholder 12345 with the ID of the Discord-Role that is needed for some commands. You can get the ID of the role by entering developer mode in Discord pressing Right-Click (on the role) -> Copy ID. This Role is not needed for most of the commands though.
-* **guildID**: You have to replace the placeholder 12345 with the ID of the Discord-Server. You can get it by Right-Click (on the server) -> Copy ID. Note that the role mentioned above has to be on this server.
-* **generalArcadeChannelId**: You have to replace the placeholder 12345 with the ID of the Discord-Channel that is used for the general arcade commands (/xp and /highscore).
-* **alineChannelId**: You have to replace the placeholder 12345 with the ID of the Discord-Channel that is used for the aLine game.
-* **triviaChannelId**: You have to replace the placeholder 12345 with the ID of the Discord-Channel that is used for the trivia game.
+* **authorizedRoleID:** You have to replace the current ID with the ID of the Discord-Role that is needed for some commands. You can get the ID of the role by entering developer mode in Discord pressing Right-Click (on the role) -> Copy ID. This Role is not needed for most of the commands though.
+* **guildID**: You have to replace the current ID with the ID of the Discord-Server. You can get it by Right-Click (on the server) -> Copy ID. Note that the role mentioned above has to be on this server.
+* **generalArcadeChannelId**: You have to replace the current ID with the ID of the Discord-Channel that is used for the general arcade commands (/xp and /highscore).
+* **alineChannelId**: You have to replace the current ID with the ID of the Discord-Channel that is used for the aLine game.
+* **triviaChannelId**: You have to replace the current ID with the ID of the Discord-Channel that is used for the trivia game.
+
+Then you need to set environment variables for the bot to run. The following variables are necessary:
+* **AMBB_TOKEN**: This is the token of your Discord Bot. You can get that token and find more information about it on the [Discord Developer Page](https://discord.com/developers/applications).
+* **AMBB_SPOONACULAR_KEY**: This is the API-Key for the Spoonacular Food API. This API is exclusively used for the /dinnerpost command. You can get this by signing up on the [Spoonacular API Page](https://spoonacular.com/food-api). Note that with the free version of this API you can only send a limited number of requests per day.
 
 ## Commands
 This is a list of all the commands this bot provides.
