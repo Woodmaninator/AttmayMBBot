@@ -6,7 +6,7 @@
 
     <groupId>woodmaninator.discord.bot</groupId>
     <artifactId>attmayMBBot</artifactId>
-    <version>1.6</version>
+    <version>1.9</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>com.discord4j</groupId>
             <artifactId>discord4j-core</artifactId>
-            <version>3.2.2</version>
+            <version>3.2.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

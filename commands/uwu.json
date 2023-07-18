@@ -1,0 +1,13 @@
+{
+    "name": "uwu",
+    "type": 1,
+    "description": "Uwuifies a message.",
+    "options": [ 
+        {
+            "name": "text",
+            "description": "The text to uwuify",
+            "type": 3,
+            "required": false
+        }
+    ]
+}

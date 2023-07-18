@@ -2,9 +2,11 @@ package attmayMBBot.commands.quoteCommand;
 
 import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
-import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
+
+import java.util.Map;
 
 public class QuoteQuizCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -16,8 +18,8 @@ public class QuoteQuizCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //ez
-        this.quoteQuizManager.addQuoteQuizInstance(message, message.getAuthor().get().getMention(), message.getAuthor().get().getId().asLong());
+        this.quoteQuizManager.addQuoteQuizInstance(channel, sender);
     }
 }

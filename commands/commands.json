@@ -1,0 +1,5 @@
+{
+  "name": "commands",
+  "type": 1,
+  "description" : "Prints a link to the GitHub Page with all the commands."
+}

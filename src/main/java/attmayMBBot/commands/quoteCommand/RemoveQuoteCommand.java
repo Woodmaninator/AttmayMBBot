@@ -5,7 +5,10 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
+
+import java.util.Map;
 
 public class RemoveQuoteCommand implements ICommand {
 
@@ -20,49 +23,49 @@ public class RemoveQuoteCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         Long quoteID = quoteIDManager.getLastQuoteId(); // id of quote to remove (defaults to last quote ID)
         AdvancedBotUserAuthorization authorizer = new AdvancedBotUserAuthorization(this.config); // authorized user check
 
         // check for user permissions
-        if (!authorizer.checkIfUserIsAuthorized(message.getAuthor().get())) {
-            message.getChannel().block().createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
+        if (!authorizer.checkIfUserIsAuthorized(sender)) {
+            channel.createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
             return;
         }
 
         // check for existing quotes
         if (quoteManager.getAllQuotesSortedByIssuedDate().size() <= 0) {
-            message.getChannel().block().createMessage("There are no quotes in the system yet.").block();
+            channel.createMessage("There are no quotes in the system yet.").block();
             return;
         }
 
         // specific case: remove specific quote
-        if (args.length > 1) {
+        if (args.containsKey("id")) {
             try {
-                quoteID = Long.parseLong(args[1]);
+                quoteID = Long.parseLong(args.get("id"));
             } catch (Exception e) {
-                message.getChannel().block().createMessage("That's not a valid Quote ID! :rolling_eyes:").block();
+                channel.createMessage("That's not a valid Quote ID! :rolling_eyes:").block();
                 return;
             }
 
             // check if the quote exists
             if (quoteID > quoteIDManager.getLastQuoteId()) {
-                message.getChannel().block().createMessage("Woah! That quote's from the future! :open_mouth:").block();
+                channel.createMessage("Woah! That quote's from the future! :open_mouth:").block();
                 return;
             } else if (quoteID < 0) {
-                message.getChannel().block().createMessage("Are you serious?? :face_with_raised_eyebrow:").block();
+                channel.createMessage("Are you serious?? :face_with_raised_eyebrow:").block();
                 return;
             } else if (quoteID == 0) {
-                message.getChannel().block().createMessage("Quote IDs start from 1. Are you trying to erase history??").block();
+                channel.createMessage("Quote IDs start at 1. Are you trying to erase history??").block();
                 return;
             }
         }
 
         if (!quoteManager.removeQuote(quoteID)) {
-            message.getChannel().block().createMessage("Failed to remove quote because it was not found.").block();
+            channel.createMessage("Failed to remove quote because it was not found.").block();
             return;
         }
         quoteManager.saveQuotesToFile();
-        message.getChannel().block().createMessage(String.format("Quote #%s successfully removed!", quoteID)).block();
+        channel.createMessage(String.format("Quote #%s successfully removed!", quoteID)).block();
     }
 }

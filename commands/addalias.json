@@ -1,0 +1,19 @@
+{
+    "name": "addalias",
+    "type": 1,
+    "description": "Adds a new alias to an author.",
+    "options": [
+        {
+            "name": "author",
+            "description": "the name of the author",
+            "type": 3,
+            "required": true
+        },
+        {
+            "name": "alias",
+            "description": "the new alias for the author",
+            "type": 3,
+            "required": true
+        }
+    ]
+}

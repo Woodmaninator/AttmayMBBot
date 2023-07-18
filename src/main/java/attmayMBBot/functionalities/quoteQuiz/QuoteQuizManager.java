@@ -2,6 +2,8 @@ package attmayMBBot.functionalities.quoteQuiz;
 
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -16,8 +18,8 @@ public class QuoteQuizManager {
         this.quoteManager = quoteManager;
     }
 
-    public void addQuoteQuizInstance(Message message, String authorMention, Long contestantId){
-        QuoteQuizInstance newInstance = new QuoteQuizInstance(this.quoteManager, message, authorMention, contestantId);
+    public void addQuoteQuizInstance(MessageChannel channel, User user){
+        QuoteQuizInstance newInstance = new QuoteQuizInstance(this.quoteManager, channel, user);
         this.quoteQuizInstances.add(newInstance);
     }
 

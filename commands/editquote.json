@@ -1,0 +1,19 @@
+{
+  "name": "editquote",
+  "type": 1,
+  "description" : "Edits a quote in the system. If no id is specified, the previous quote will be edited.",
+  "options": [
+    {
+      "name": "text",
+      "description": "the new text of the quote",
+      "type": 3,
+      "required": true
+    },
+    {
+      "name": "id",
+      "description": "the id of the quote you want to edit",
+      "type": 4,
+      "required": false
+    }
+  ]
+}

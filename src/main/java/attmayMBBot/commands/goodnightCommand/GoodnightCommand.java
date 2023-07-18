@@ -7,11 +7,10 @@ import attmayMBBot.util.EWordQueryMode;
 import attmayMBBot.util.EWordType;
 import attmayMBBot.util.WordObject;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GoodnightCommand implements ICommand {
@@ -21,22 +20,18 @@ public class GoodnightCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         EWordQueryMode wordQueryMode = EWordQueryMode.ADJECTIVE;
         String searchTerm = "";
         Random random = new Random();
         //Get the arguments and other shit
-        if (args.length == 2) {
-            if (args[1].equals("n"))
-                wordQueryMode = EWordQueryMode.NOUN_BASED_ADJECTIVE;
-            else
-                searchTerm = args[1].toLowerCase();
-        }
-        if (args.length == 3) {
-            searchTerm = args[1].toLowerCase();
-            if (args[2].equals("n"))
+        if(args.containsKey("compound-word")){
+            if(args.get("compound-word").equalsIgnoreCase("true"))
                 wordQueryMode = EWordQueryMode.NOUN_BASED_ADJECTIVE;
         }
+
+        if(args.containsKey("keyword"))
+            searchTerm = args.get("keyword");
 
         //Get the current weekday and the weekday tomorrow
         String weekday = getWeekdayForAttmayTimezone(0);
@@ -58,12 +53,12 @@ public class GoodnightCommand implements ICommand {
         }
 
         if (finalWordObjectList.size() == 0)
-            message.getChannel().block().createMessage("There are no words. Sorry. Goodnight!").block();
+           channel.createMessage("There are no words. Sorry. Goodnight!").block();
         else {
             String finalWord = finalWordObjectList.get(random.nextInt(finalWordObjectList.size())).getTerm();
             if (wordQueryMode == EWordQueryMode.NOUN_BASED_ADJECTIVE)
                 finalWord = finalWord + "-" + this.config.getGoodnightConfig().getCompoundModifierList().get(random.nextInt(this.config.getGoodnightConfig().getCompoundModifierList().size()));
-            message.getChannel().block().createMessage("I'm afraid it's that time. I hope you all have a " + finalWord + " " + weekday + " night and an even better " + weekdayTomorrow + ". Goodnight!").block();
+            channel.createMessage("I'm afraid it's that time. I hope you all have a " + finalWord + " " + weekday + " night and an even better " + weekdayTomorrow + ". Goodnight!").block();
         }
     }
     private String getWeekdayForAttmayTimezone(long offset){

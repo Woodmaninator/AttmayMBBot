@@ -17,7 +17,7 @@ public class EmojiKitchenHandler {
     private static String getCodePointString(String emoji){
         String result = "";
         if(!emoji.contains("\u200D")) {
-            //This is the case in which there is no zero width joiner in the emoji (WHICH MEANS THAT ITS A ONE PIECE EMOJI)
+            //This is the case in which there is no zero width joiner in the emoji (WHICH MEANS THAT IT'S A ONE PIECE EMOJI)
             result = emoji.codePoints().mapToObj(Integer::toHexString).findFirst().get();
             result = appendVariantSelector(emoji, result);
         } else {

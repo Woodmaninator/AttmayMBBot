@@ -4,12 +4,14 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteAuthor;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AllAuthorsCommand implements ICommand {
@@ -25,7 +27,7 @@ public class AllAuthorsCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         List<QuoteAuthor> authorList;
         List<String> embedDescriptions = new ArrayList<>();
         String embedTitle = "List of all Quote Authors";
@@ -36,7 +38,7 @@ public class AllAuthorsCommand implements ICommand {
 
         // check if there are any quotes authors
         if (maxPlaceCount == 0) {
-            message.getChannel().block().createMessage("There are no quote authors to list!").block();
+            channel.createMessage("There are no quote authors to list!").block();
             return;
         }
 
@@ -44,56 +46,40 @@ public class AllAuthorsCommand implements ICommand {
         authorList = quoteManager.getQuoteAuthors().stream().sorted(this.authorComparator).collect(Collectors.toList());
 
         // check if there is an author count provided
-        if (args.length > 1) {
-            if (args[1].equalsIgnoreCase("top")) {
+        if (args.containsKey("count")) {
+            if (args.containsKey("ranking") && args.get("ranking").equalsIgnoreCase("true")) {
                 // command is !authorlist top [place]
-                if (args.length < 3) {
-                    message.getChannel()
-                            .block()
-                            .createMessage("This command feels incomplete.\nUse !authorlist top [place] instead.")
-                            .block();
+                if (!args.containsKey("count")) {
+                        channel.createMessage("This command feels incomplete.\ncount is required when enabling ranking.").block();
                     return;
                 }
-
                 // parse the [place] in !authorlist top [place]
                 try {
-                    maxPlaceCount = Math.min(Integer.parseInt(args[2]), maxPlaceCount);
+                    maxPlaceCount = Math.min(Integer.parseInt(args.get("count")), maxPlaceCount);
 
                     if (maxPlaceCount <= 0) {
                         // invalid count
-                        message.getChannel()
-                                .block()
-                                .createMessage(":face_with_raised_eyebrow:")
-                                .block();
+                        channel.createMessage(":face_with_raised_eyebrow:").block();
                         return;
                     }
                 } catch (Exception e) {
                     // not a number
-                    message.getChannel()
-                            .block()
-                            .createMessage("Not a valid place number.")
-                            .block();
-                    return;
+                   channel.createMessage("Not a valid place number.").block();
+                   return;
                 }
             } else {
                 // command is !authorlist [count]
                 try {
-                    maxAuthorsCount = Math.min(Integer.parseInt(args[1]), maxAuthorsCount);
+                    maxAuthorsCount = Math.min(Integer.parseInt(args.get("count")), maxAuthorsCount);
 
                     if (maxAuthorsCount <= 0) {
                         // invalid count
-                        message.getChannel()
-                                .block()
-                                .createMessage(":face_with_raised_eyebrow:")
-                                .block();
+                        channel.createMessage(":face_with_raised_eyebrow:").block();
                         return;
                     }
                 } catch (Exception e) {
                     // not a number
-                    message.getChannel()
-                            .block()
-                            .createMessage("Not a valid count.")
-                            .block();
+                    channel.createMessage("Not a valid count.").block();
                     return;
                 }
             }
@@ -159,7 +145,7 @@ public class AllAuthorsCommand implements ICommand {
 
             // append new line
             if (i != maxAuthorsCount-1) {
-                sb.append("\n");
+                sb.append("\n\n");
             }
 
             // check if exceeded capacity
@@ -187,9 +173,7 @@ public class AllAuthorsCommand implements ICommand {
         // yeet the results out
         String finalEmbedTitle = embedTitle;
         for (String embedDescription : embedDescriptions) {
-            message.getChannel()
-                    .block()
-                    .createMessage(y -> {
+            channel.createMessage(y -> {
                        y.setEmbed(x -> {
                            x.setTitle(finalEmbedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102));
                        });

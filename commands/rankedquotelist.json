@@ -1,0 +1,19 @@
+{
+    "name": "rankedquotelist",
+    "type": 1,
+    "description": "Lists the top 10 quotes from /rankquotes.",
+    "options": [
+        {
+            "name": "author",
+            "description": "the author whose ranked quotes to list or the count of quotes to show",
+            "type": 3,
+            "required": false
+        },
+        {
+            "name": "count",
+            "description": "the count of quotes to show",
+            "type": 4,
+            "required": false
+        }
+    ]
+}

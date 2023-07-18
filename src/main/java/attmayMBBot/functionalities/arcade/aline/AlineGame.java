@@ -141,7 +141,7 @@ public class AlineGame {
         //Note that this method does not take a boardInfo object as an argument because this method will be called before the final boardInfo is generated
         //This method will return the least amount of moves needed to reach the target from the starting position for the given board
 
-        //breadth first search - shoutsout to gaubbe for telling me about this algorithm
+        //breadth first search - shoutsout to Gaubbe for telling me about this algorithm
 
         //create the first AlineBoardInfo instance from the initial state of the game.
         AlineBoardInfo startInfo = new AlineBoardInfo(BoardDeepCloner.deepCloneBoard(board), startX, startY, 0);
@@ -216,7 +216,7 @@ public class AlineGame {
         }
         //move until it is no longer possible
         boolean canMove = true;
-        boolean movementHappend = false;
+        boolean movementHappened = false;
         while(canMove){
             int provisionalX = boardInfo.getCurrentX() + xOffset;
             int provisionalY = boardInfo.getCurrentY() + yOffset;
@@ -228,14 +228,14 @@ public class AlineGame {
             else if(boardInfo.getBoard()[provisionalX][provisionalY] == EAlineTileType.LINE) //Hit a line (itself)
                 canMove = false;
             else if (boardInfo.getBoard()[provisionalX][provisionalY] == EAlineTileType.TARGET) { //Hit the target
-                movementHappend = true;
+                movementHappened = true;
                 boardInfo.setWon(true);
                 canMove = false; //Stop movement after winning the game
                 boardInfo.setCurrentX(provisionalX);
                 boardInfo.setCurrentY(provisionalY);
                 boardInfo.getBoard()[boardInfo.getCurrentX()][boardInfo.getCurrentY()] = EAlineTileType.TARGET_HIT;
             } else if (boardInfo.getBoard()[provisionalX][provisionalY] == EAlineTileType.DEATH){ //Hit the death trigger
-                movementHappend = true;
+                movementHappened = true;
                 boardInfo.setGameOver(true);
                 canMove = false;
                 boardInfo.setCurrentX(provisionalX);
@@ -244,14 +244,14 @@ public class AlineGame {
             }
             else{
                 //Movement is possible, that means the provisional position is used to overwrite the current position and the grid gets set to a Line
-                movementHappend = true;
+                movementHappened = true;
                 boardInfo.setCurrentX(provisionalX);
                 boardInfo.setCurrentY(provisionalY);
                 boardInfo.getBoard()[boardInfo.getCurrentX()][boardInfo.getCurrentY()] = EAlineTileType.LINE;
             }
         }
         //If movement occurred, increment the number of moves in the boardInfo object
-        if(movementHappend)
+        if(movementHappened)
             boardInfo.setNumberOfMoves(boardInfo.getNumberOfMoves() + 1);
         //Check if there are moves possible, but only if the game is not won yet
         if(!boardInfo.isWon())

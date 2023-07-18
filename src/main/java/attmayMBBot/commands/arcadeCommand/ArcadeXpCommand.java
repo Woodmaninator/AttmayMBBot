@@ -6,8 +6,12 @@ import attmayMBBot.functionalities.arcade.ArcadeManager;
 import attmayMBBot.functionalities.arcade.ArcadeUser;
 import attmayMBBot.functionalities.popupMessageHandling.PopupMessageHandler;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
+
+import java.util.Map;
 
 public class ArcadeXpCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -17,30 +21,30 @@ public class ArcadeXpCommand implements ICommand {
         this.arcadeManager = arcadeManager;
     }
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //Check if the message was sent in the right channel
-        if(message.getChannel().block().getId().asLong() == this.config.getArcadeConfig().getGeneralArcadeChannelId()) {
+        if(channel.getId().asLong() == this.config.getArcadeConfig().getGeneralArcadeChannelId()) {
             ArcadeUser user = null;
-            if (this.arcadeManager.userExists(message.getAuthor().get().getId().asLong())) {
-                user = this.arcadeManager.getUser(message.getAuthor().get().getId().asLong());
+            if (this.arcadeManager.userExists(sender.getId().asLong())) {
+                user = this.arcadeManager.getUser(sender.getId().asLong());
             } else {
                 //add a new user to the arcade manager
-                user = this.arcadeManager.addNewUser(message.getAuthor().get().getId().asLong());
+                user = this.arcadeManager.addNewUser(sender.getId().asLong());
                 this.arcadeManager.saveArcadeInfoToFile();
             }
 
             if (user != null) {
                 EmbedCreateSpec embed = EmbedCreateSpec.builder()
                         .color(Color.of(0x006666))
-                        .title("XP Information for " + message.getAuthor().get().getUsername())
+                        .title("XP Information")
                         .url("https://github.com/Woodmaninator/AttmayMBBot")
-                        .description(this.arcadeManager.getLevelInfoStringFromUser(user.getId()))
+                        .description("for " + sender.getMention() + "\n" + this.arcadeManager.getLevelInfoStringFromUser(user.getId()))
                         .build();
 
-                message.getChannel().block().createMessage(embed).block();
+                channel.createMessage(embed).block();
             }
         } else {
-            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(message,  message.getAuthor().get().getMention() +
+            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(channel,  sender.getMention() +
                     " You can only use this command in the <#" + this.config.getArcadeConfig().getGeneralArcadeChannelId()+  "> channel!", 30000);
         }
     }

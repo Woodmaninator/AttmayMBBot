@@ -4,12 +4,14 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.Quote;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AllQuoteIDsCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -20,20 +22,20 @@ public class AllQuoteIDsCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         StringBuilder sb = new StringBuilder();
         List<Pair<String,Quote>> quoteList = null;
         String embedTitle = "List of all Quotes and their IDs";
         List<String> embedDescriptions = new ArrayList<>();
 
-        if (args.length == 1) { // default case: print all the quotes
+        if (!args.containsKey("author")) { // default case: print all the quotes
             quoteList = quoteManager.getAllQuotesSortedByIssuedDate();
-        } else if (args.length > 1) { // special case: print quotes by a specific author
-            String authorName = args[1];
+        } else { // special case: print quotes by a specific author
+            String authorName = args.get("author");
             if (quoteManager.checkIfQuoteAuthorNameExists(authorName)) {
                 quoteList = quoteManager.getAllQuotesFromAuthorSortedByIssuedDate(authorName);
             } else {
-                message.getChannel().block().createMessage("Author not found!").block();
+                channel.createMessage("Author not found!").block();
                 return;
             }
         }
@@ -45,7 +47,7 @@ public class AllQuoteIDsCommand implements ICommand {
 
         // no quotes D:
         if (quoteList.size() <= 0) {
-            message.getChannel().block().createMessage("There are no quotes that match those requirements in the system yet.").block();
+            channel.createMessage("There are no quotes that match those requirements in the system yet.").block();
         }
 
         for (Pair<String, Quote> quotePair : quoteList) {
@@ -73,7 +75,7 @@ public class AllQuoteIDsCommand implements ICommand {
 
         // just yeet the quote list out there
         for (String embedDescription : embedDescriptions) {
-            message.getChannel().block().createMessage(y -> {
+            channel.createMessage(y -> {
                 y.setEmbed(x -> {
                     x.setTitle(embedTitle)
                      .setDescription(embedDescription)

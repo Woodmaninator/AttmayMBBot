@@ -4,7 +4,10 @@ import attmayMBBot.authorization.AdvancedBotUserAuthorization;
 import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
+
+import java.util.Map;
 
 // intended command usage: !removeauthor [author name]
 
@@ -18,37 +21,28 @@ public class RemoveQuoteAuthorCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         AdvancedBotUserAuthorization authorization = new AdvancedBotUserAuthorization(config);
         String authorName;
 
         // authorized user check
-        if (!authorization.checkIfUserIsAuthorized(message.getAuthor().get())) {
-            message.getChannel()
-                    .block()
-                    .createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.")
-                    .block();
+        if (!authorization.checkIfUserIsAuthorized(sender)) {
+            channel.createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();
             return;
         }
 
         // check argument count
-        if (args.length < 2) {
-            message.getChannel()
-                    .block()
-                    .createMessage("This command feels incomplete.\nUse !removeauthor [Author username] instead.")
-                    .block();
+        if (!args.containsKey("authorname")) {
+            channel.createMessage("This command feels incomplete.\nUse /removeauthor [Author username] instead.").block();
             return;
         }
 
         // get author name
-        authorName = args[1];
+        authorName = args.get("authorname");
 
         // attempt remove author
         if (!quoteManager.getQuoteAuthors().removeIf(author -> author.getName().equalsIgnoreCase(authorName))) {
-            message.getChannel()
-                    .block()
-                    .createMessage("Who? :face_with_raised_eyebrow:")
-                    .block();
+            channel.createMessage("Who? :face_with_raised_eyebrow:").block();
             return;
         }
 
@@ -56,9 +50,6 @@ public class RemoveQuoteAuthorCommand implements ICommand {
         quoteManager.saveQuotesToFile();
 
         // report success
-        message.getChannel()
-                .block()
-                .createMessage(String.format("Author \"%s\" and their quotes have successfully been removed!", authorName))
-                .block();
+        channel.createMessage(String.format("Author \"%s\" and their quotes have successfully been removed!", authorName)).block();
     }
 }

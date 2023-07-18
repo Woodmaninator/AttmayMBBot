@@ -38,10 +38,10 @@ public abstract class AArcadeGameInstance {
     protected ArcadeManager getArcadeManager(){
         return this.arcadeManager;
     }
-    public AArcadeGameInstance(ArcadeManager arcadeManager, Message message, Long duration) {
+    public AArcadeGameInstance(ArcadeManager arcadeManager, MessageChannel channel, Long duration) {
         this.readyToDelete = false;
         this.arcadeManager = arcadeManager;
-        this.channel = message.getChannel().block();
+        this.channel = channel;
         this.startTime = new Date().getTime();
         this.duration = duration;
     }

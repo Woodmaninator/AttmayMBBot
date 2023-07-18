@@ -7,12 +7,14 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteDuel;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingStats;
-import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RankedQuoteListCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -26,25 +28,21 @@ public class RankedQuoteListCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         int count = 10; //The default number of quotes to show
         String authorName = ""; //Default author name aka everyone
         //Second argument is the number of quotes to show
-        if(args.length > 1){
-            try{
-                count = Integer.parseInt(args[1]);
-            }catch (NumberFormatException e){
-                //not a number (obviously), so the second argument is the author name
-                authorName = args[1];
-                if(args.length > 2){
-                    //third argument could be the number of quotes to show (if the second argument was the author name)
-                    try{
-                        count = Integer.parseInt(args[2]);
-                    }catch(NumberFormatException e2) {
-                        //eh. not that important
-                    }
-                }
+        if(args.containsKey("count")) {
+            try {
+                count = Integer.parseInt(args.get("count"));
+            } catch(Exception ex) {
+                //default to 10
+                count = 10;
             }
+        }
+
+        if(args.containsKey("author")){
+            authorName = args.get("author");
         }
 
         List<QuoteRankingStats> stats = new ArrayList<>();
@@ -55,7 +53,7 @@ public class RankedQuoteListCommand implements ICommand {
             if(quoteManager.checkIfQuoteAuthorNameExists(authorName)){
                 quotes = quoteManager.getAllQuotesFromAuthorSortedByIssuedDate(authorName);
             }else{
-                message.getChannel().block().createMessage("Your specified author name does not exist!").block();
+                channel.createMessage("Your specified author name does not exist!").block();
                 return;
             }
         } else {
@@ -90,15 +88,20 @@ public class RankedQuoteListCommand implements ICommand {
         }
 
         //All quotes have stats now. It is time to sort them now
-
+        //Sort by win ratio if possible, otherwise sort by wins, otherwise sort by losses
         stats.sort( (x,y) -> {
-           if(x.getWins() != y.getWins())
-               return y.getWins() - x.getWins();
-           else if(x.getLosses() != y.getLosses())
-               return x.getLosses() - y.getLosses();
-           else if(x.getDraws() != y.getDraws())
-               return y.getDraws() - x.getDraws();
-           return 0;
+            int lossesX = x.getLosses() == 0 ? 1 : x.getLosses();
+            int lossesY = y.getLosses() == 0 ? 1 : y.getLosses();
+
+            double ratioX = (double)x.getWins() / (double)lossesX;
+            double ratioY = (double)y.getWins() / (double)lossesY;
+
+            if(ratioX != ratioY)
+                return (int)(ratioY - ratioX);
+            else if(x.getWins() != y.getWins())
+                return y.getWins() - x.getWins();
+            else
+                return x.getLosses() - y.getLosses();
         });
 
         if(count < 1)
@@ -130,7 +133,7 @@ public class RankedQuoteListCommand implements ICommand {
             embedDescriptions.add(sb.toString());
         //Just yeet them out there
         for (String embedDescription : embedDescriptions) {
-            message.getChannel().block().createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
+            channel.createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
         }
     }
 }

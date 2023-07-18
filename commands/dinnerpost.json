@@ -1,0 +1,13 @@
+{
+    "name": "dinnerpost",
+    "type": 1,
+    "description": "Posts a dinnerpost.",
+    "options": [ 
+        {
+            "name": "keyword",
+            "description": "The keyword for the dinnerpost.",
+            "type": 3,
+            "required": false
+        }
+    ]
+}

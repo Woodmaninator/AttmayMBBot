@@ -6,6 +6,7 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 public class QuoteQuizInstance {
+    private static Random random  = new Random();
     private QuoteManager quoteManager;
     private Message quizMessage;
     private String authorMention;
@@ -34,21 +36,19 @@ public class QuoteQuizInstance {
         return this.readyToDelete;
     }
 
-    public QuoteQuizInstance(QuoteManager quoteManager, Message message, String authorMention, Long contestantId) {
+    public QuoteQuizInstance(QuoteManager quoteManager, MessageChannel channel, User user) {
         this.quoteManager = quoteManager;
-        this.authorMention = authorMention;
-        this.contestantId = contestantId;
+        this.authorMention = user.getMention();
+        this.contestantId = user.getId().asLong();
         this.startTime = new Date().getTime();
         this.guessDuration = 5L * 60L * 1000L; //5 minutes
         this.readyToDelete = false;
-        this.guess = 0; //0 means that no quess was made yet
+        this.guess = 0; //0 means that no guess was made yet
 
-        initQuiz(message);
+        initQuiz(channel);
     }
 
-    private void initQuiz(Message quizRequestMessage){
-        Random random = new Random();
-
+    private void initQuiz(MessageChannel channel){
         this.correctAnswer = random.nextInt(4) + 1; //1-4
 
         List<Pair<String, Quote>> quotePairList = this.quoteManager.getAllQuotesSortedByIssuedDate();
@@ -58,7 +58,7 @@ public class QuoteQuizInstance {
 
         //Only init the quiz if there are at least 4 different authors in the database
         if(quoteAuthorList.size() < 4){
-            quizRequestMessage.getChannel().block().createMessage("There are not enough authors in the database to create a quote quiz. There have to be at least 4 authors..").block();
+            channel.createMessage("There are not enough authors in the database to create a quote quiz. There have to be at least 4 authors..").block();
             this.readyToDelete = true;
             return;
         }
@@ -111,7 +111,7 @@ public class QuoteQuizInstance {
                 .addField("Here are your options:", possibleAnswersString, false)
                 .build();
 
-        Message quizMessage = quizRequestMessage.getChannel().block().createMessage(embed).block();
+        Message quizMessage = channel.createMessage(embed).block();
         quizMessage.addReaction(ReactionEmoji.unicode("\u0031\u20E3")).block();
         quizMessage.addReaction(ReactionEmoji.unicode("\u0032\u20E3")).block();
         quizMessage.addReaction(ReactionEmoji.unicode("\u0033\u20E3")).block();

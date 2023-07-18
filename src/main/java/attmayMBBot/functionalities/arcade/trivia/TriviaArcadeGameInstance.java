@@ -6,6 +6,7 @@ import attmayMBBot.functionalities.arcade.ArcadeManager;
 import attmayMBBot.functionalities.arcade.ArcadeUser;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
@@ -13,6 +14,7 @@ import discord4j.rest.util.Color;
 import java.util.Random;
 
 public class TriviaArcadeGameInstance extends AArcadeGameInstance {
+    private static Random random = new Random();
     private long contestantId;
     private String authorMention;
     private TriviaQuestionInformation questionInformation;
@@ -22,17 +24,16 @@ public class TriviaArcadeGameInstance extends AArcadeGameInstance {
     private boolean timeRanOut;
     private String possibleAnswersString;
 
-    public TriviaArcadeGameInstance(ArcadeManager arcadeManager, Message message, Long contestantId, ETriviaDifficulty difficulty) {
-        super(arcadeManager, message, 20000L); //Duration of 20 seconds
-        this.authorMention = message.getAuthor().get().getMention();
+    public TriviaArcadeGameInstance(ArcadeManager arcadeManager, MessageChannel channel, User user, ETriviaDifficulty difficulty) {
+        super(arcadeManager, channel, 20000L); //Duration of 20 seconds
+        this.authorMention = user.getMention();
         this.guess = 0; //This means that no guess has been made yet
-        this.contestantId = message.getAuthor().get().getId().asLong();
+        this.contestantId = user.getId().asLong();
         this.difficulty = difficulty;
         this.timeRanOut = false;
         initTriviaQuestion();
     }
     private void initTriviaQuestion(){
-        Random random = new Random();
         this.correctAnswer = random.nextInt(4) + 1; //1-4
 
         TriviaQuestionInformation questionInformation = new TriviaAPIHandler().getTriviaQuestion(this.difficulty);

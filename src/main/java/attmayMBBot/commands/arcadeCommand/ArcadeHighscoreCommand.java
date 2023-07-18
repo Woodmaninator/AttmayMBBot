@@ -10,11 +10,13 @@ import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ArcadeHighscoreCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -28,9 +30,9 @@ public class ArcadeHighscoreCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //CHeck if the message was sent in the right channel
-        if(message.getChannel().block().getId().asLong() == this.config.getArcadeConfig().getGeneralArcadeChannelId()) {
+        if(channel.getId().asLong() == this.config.getArcadeConfig().getGeneralArcadeChannelId()) {
             List<ArcadeUser> users = this.arcadeManager.getUsers();
             users.sort((x,y) -> y.getXp().compareTo(x.getXp()));
 
@@ -38,7 +40,7 @@ public class ArcadeHighscoreCommand implements ICommand {
             String embedTitle = "Highscore List";
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < users.size(); i++) {
-                String username = this.gateway.getUserById(Snowflake.of(users.get(i).getId())).block().getUsername();
+                String username = this.gateway.getUserById(Snowflake.of(users.get(i).getId())).block().getMention();
                 String level = "" + this.arcadeManager.getUserLevel(users.get(i).getId());
                 String nextEntry = (i + 1) + ". " + username + " Level " + level + " - " + users.get(i).getXp() + " XP";
                 if (sb.toString().length() + (nextEntry + "\n\n").length() < 4096)
@@ -56,10 +58,10 @@ public class ArcadeHighscoreCommand implements ICommand {
                 embedDescriptions.add(sb.toString());
             //Just yeet them out there
             for (String embedDescription : embedDescriptions) {
-                message.getChannel().block().createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
+                channel.createMessage(y -> y.setEmbed(x -> x.setTitle(embedTitle).setDescription(embedDescription).setColor(Color.of(0, 102, 102)))).block();
             }
         } else {
-            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(message,  message.getAuthor().get().getMention() +
+            PopupMessageHandler.sendTemporaryMessageAndDeleteInvoker(channel,  sender.getMention() +
                     " You can only use this command in the <#" + this.config.getArcadeConfig().getGeneralArcadeChannelId()+  "> channel!", 30000);
         }
     }

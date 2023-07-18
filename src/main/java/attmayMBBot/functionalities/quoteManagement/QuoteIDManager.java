@@ -16,7 +16,7 @@ public class QuoteIDManager {
             //The current quote id will be the maximum of the current quotes + 1, so the currentQuoteId is the next free id
             this.currentQuoteId = currentQuotes.stream().max(Comparator.comparing(Quote::getId)).get().getId() + 1;
         } else {
-            //Default case if there are no quotes in the system yet: Id will be 1
+            //Default case if there are no quotes in the system yet: ID will be 1
             this.currentQuoteId = 1L;
         }
     }

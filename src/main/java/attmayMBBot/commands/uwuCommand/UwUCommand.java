@@ -4,9 +4,10 @@ import attmayMBBot.commands.ICommand;
 import attmayMBBot.config.AttmayMBBotConfig;
 import attmayMBBot.functionalities.UwUifyer;
 import discord4j.core.object.entity.Message;
-import reactor.core.publisher.Mono;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 
-import java.time.Instant;
+import java.util.Map;
 
 public class UwUCommand implements ICommand {
     private AttmayMBBotConfig config;
@@ -16,24 +17,22 @@ public class UwUCommand implements ICommand {
     }
 
     @Override
-    public void execute(Message message, String[] args) {
+    public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         String normalMessage = "";
-        if(args.length > 1) {
-            StringBuilder sb = new StringBuilder();
-            for(int i = 1; i < args.length; i++)
-                sb.append(args[i]).append(" ");
-            normalMessage = sb.toString();
+        if(args.containsKey("text")) {
+            normalMessage = args.get("text");
         }
         else {
             //Get the last message from that channel (excluding the one that is the command)
-            Message lastMessage = message.getChannel().block().getMessagesBefore(message.getId()).blockFirst();
+            //I am not too sure that this will work, but we can hope
+            Message lastMessage = channel.getLastMessage().block();
             if (lastMessage != null)
                 normalMessage = lastMessage.getContent();
             else {
-                message.getChannel().block().createMessage("Whoops! something went wrong.").block();
+                channel.createMessage("Whoops! something went wrong.").block();
                 return;
             }
         }
-        message.getChannel().block().createMessage(new UwUifyer().uwuify(normalMessage)).block();
+        channel.createMessage(new UwUifyer().uwuify(normalMessage)).block();
     }
 }

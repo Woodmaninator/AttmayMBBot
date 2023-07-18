@@ -1,0 +1,13 @@
+{
+  "name": "quote",
+  "type": 1,
+  "description" : "Returns a random quote or a quote with the specified ID.",
+  "options": [
+    {
+      "name": "id",
+      "description": "The id of the quote you want to have",
+      "type": 4,
+      "required": false
+    }
+  ]
+}

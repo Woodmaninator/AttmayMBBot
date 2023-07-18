@@ -1,0 +1,19 @@
+{
+  "name": "goodnight",
+  "type": 1,
+  "description" : "Prints an attmayMB-certified goodnight message.",
+  "options": [
+    {
+      "name": "keyword",
+      "description": "keyword for the message",
+      "type": 3,
+      "required": false
+    },
+    {
+      "name": "compound-word",
+      "description": "whether the message should contain a compound word",
+      "type": 5,
+      "required": false
+    }
+  ]
+}

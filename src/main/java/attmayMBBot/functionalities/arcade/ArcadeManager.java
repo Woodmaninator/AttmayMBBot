@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.util.List;
 
 public class ArcadeManager {
-    //These are the variables that are used for formular for the arcade game. Total XP = baseXp * (level^exponent)
+    //These are the variables that are used for formula for the arcade game. Total XP = baseXp * (level^exponent)
     private int baseXp;
     private double exponent;
     private int maxLevel;

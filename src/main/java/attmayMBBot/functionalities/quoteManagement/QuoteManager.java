@@ -1,6 +1,7 @@
 package attmayMBBot.functionalities.quoteManagement;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.util.Pair;
 
 import java.io.BufferedWriter;
@@ -100,7 +101,7 @@ public class QuoteManager {
     public void saveQuotesToFile(){
         String path = "AMBBQuotes.json";
         try {
-            String jsonString = new Gson().toJson(this);
+            String jsonString = new GsonBuilder().setPrettyPrinting().create().toJson(this);
             BufferedWriter writer = new BufferedWriter(new FileWriter(path));
             writer.write(jsonString);
             writer.close();

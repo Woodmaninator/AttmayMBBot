@@ -1,0 +1,19 @@
+{
+  "name": "addauthor",
+  "type": 1,
+  "description" : "Adds an author to the quote system.",
+  "options": [
+    {
+      "name": "name",
+      "description": "the name of the author",
+      "type": 3,
+      "required": true
+    },
+    {
+      "name": "user-id",
+      "description": "the discord user id of the author",
+      "type": 3,
+      "required": true
+    }
+  ]
+}

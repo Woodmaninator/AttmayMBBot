@@ -1,0 +1,13 @@
+{
+    "name": "removealias",
+    "type": 1,
+    "description": "Removes an author's alias.",
+    "options": [
+        {
+            "name": "alias",
+            "description": "The alias of an author that will be removed.",
+            "type": 3,
+            "required": true
+        }
+    ]
+}
