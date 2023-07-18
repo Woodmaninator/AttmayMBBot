@@ -89,15 +89,20 @@ public class AttmayMBBotMain {
             User sender = event.getInteraction().getUser();
 
             StringBuilder replyBuilder = new StringBuilder();
-            replyBuilder.append("Executing the following command: " + event.getCommandName() + "\n");
+            replyBuilder.append("Executing the following command: /" + event.getCommandName() + "\n");
             for(ApplicationCommandInteractionOption option : event.getOptions()){
                 if(option.getValue().isPresent())
-                    replyBuilder.append("-" + option.getName() + ": " + option.getValue().get().toString() + "\n");
+                    replyBuilder.append("-" + option.getName() + ": " + option.getValue().get().getRaw() + "\n");
             }
 
             //Forward the command, the channel and the sender to the command interpreter
-            event.reply("Executing the following command: " + event.getCommandName());
+            try {
+                event.reply(replyBuilder.toString()).block();
+            } catch(Throwable t) {
+                t.printStackTrace();
+            }
 
+            commandInterpreter.interpretCommand(event.getCommandName(), event.getOptions(), sender, channel);
         });
 
         //Start the update loop for the quote quiz manager

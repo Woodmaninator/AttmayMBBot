@@ -23,7 +23,7 @@ public class AddQuoteAuthorCommand implements ICommand {
     public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
-            if(!args.containsKey("name") || !args.containsKey("user-id")){
+            if(args.containsKey("name") && args.containsKey("user-id")){
                 String quoteAuthorName = args.get("name");
                 String discordIdString = args.get("user-id");
                 Long discordId = 0L;
@@ -48,7 +48,7 @@ public class AddQuoteAuthorCommand implements ICommand {
                 }
             } else {
                 //Wrong number of arguments
-                channel.createMessage("This command feels incomplete.\nUse /addAuthor [Username] [Discord ID of the user] instead!").block();
+                channel.createMessage("This command feels incomplete.\nUse /addauthor <name> <Discord ID of the user> instead!").block();
             }
         } else //No access to the command
             channel.createMessage("Well, I know this is somewhat awkward but you are not allowed to perform this command.").block();

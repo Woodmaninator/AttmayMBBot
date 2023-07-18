@@ -36,9 +36,9 @@ public class ArcadeXpCommand implements ICommand {
             if (user != null) {
                 EmbedCreateSpec embed = EmbedCreateSpec.builder()
                         .color(Color.of(0x006666))
-                        .title("XP Information for " + sender.getMention())
+                        .title("XP Information")
                         .url("https://github.com/Woodmaninator/AttmayMBBot")
-                        .description(this.arcadeManager.getLevelInfoStringFromUser(user.getId()))
+                        .description("for " + sender.getMention() + "\n" + this.arcadeManager.getLevelInfoStringFromUser(user.getId()))
                         .build();
 
                 channel.createMessage(embed).block();

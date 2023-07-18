@@ -23,7 +23,7 @@ public class AddQuoteAuthorAliasCommand implements ICommand {
     public void execute(Map<String, String> args, User sender, MessageChannel channel) {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
-            if(!args.containsKey("author") || !args.containsKey("alias")){
+            if(args.containsKey("author") && args.containsKey("alias")){
                 String quoteAuthorName = args.get("author");
                 String newAlias = args.get("alias");
 

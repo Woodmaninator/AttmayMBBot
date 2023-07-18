@@ -29,7 +29,7 @@ public class MessageInterpreter {
                 if(messageContent.length() > 0){
                     if(messageContent.charAt(0) == '!'){
                         //If this statement is true, the message is a command
-                        message.getChannel().block().createMessage("Looks like you just attempted to write a command.\nCommands are now available via slash commands. Use a '/' instead of a '!'");
+                        message.getChannel().block().createMessage("Looks like you just attempted to write a command.\nCommands are now available via slash commands. Use a '/' instead of a '!'").block();
                     } else {
                         //If the statement is false, the message is not a command and will get put through the message text interpreters
                         this.messageTextInterpreter.interpretMessageText(message);

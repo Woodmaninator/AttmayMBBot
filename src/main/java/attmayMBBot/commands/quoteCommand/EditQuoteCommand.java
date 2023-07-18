@@ -9,7 +9,6 @@ import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 import javafx.util.Pair;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
@@ -68,7 +67,7 @@ public class EditQuoteCommand implements ICommand {
         }
 
         if (!quoteManager.modifyQuoteText(quoteData.getKey(), quoteData.getValue())) {
-            channel.createMessage("Failed to edit quote: quote not find.").block();
+            channel.createMessage("Failed to edit quote: quote not found.").block();
             return;
         }
 
@@ -90,11 +89,7 @@ public class EditQuoteCommand implements ICommand {
             quoteID = quoteIDManager.getLastQuoteId();
         }
 
-        if(args.containsKey("text")){
-            newQuoteString = args.get("text");
-        } else {
-            newQuoteString = "";
-        }
+        newQuoteString = args.getOrDefault("text", "");
 
         return Optional.of(new Pair(quoteID, newQuoteString));
     }

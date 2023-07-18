@@ -34,7 +34,7 @@ public class RemoveQuoteAuthorAliasCommand implements ICommand {
         }
 
         // check argument count
-        if (args.containsKey("alias")) {
+        if (!args.containsKey("alias")) {
             channel.createMessage("This command feels incomplete.\nUse /removealias [Alias] instead.").block();
             return;
         }

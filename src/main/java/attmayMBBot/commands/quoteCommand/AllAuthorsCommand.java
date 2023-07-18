@@ -47,7 +47,7 @@ public class AllAuthorsCommand implements ICommand {
 
         // check if there is an author count provided
         if (args.containsKey("count")) {
-            if (args.get("ranking").equalsIgnoreCase("true")) {
+            if (args.containsKey("ranking") && args.get("ranking").equalsIgnoreCase("true")) {
                 // command is !authorlist top [place]
                 if (!args.containsKey("count")) {
                         channel.createMessage("This command feels incomplete.\ncount is required when enabling ranking.").block();

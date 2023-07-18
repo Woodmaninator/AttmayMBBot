@@ -70,8 +70,9 @@ public class CommandInterpreter {
         //Get all the command arguments and pass them into a map
         Map<String, String> args = new TreeMap<>();
         for(ApplicationCommandInteractionOption option : options)
-            if(option.getValue().isPresent())
-                args.put(option.getName(), option.getValue().get().asString());
+            if(option.getValue().isPresent()) {
+                args.put(option.getName(), option.getValue().get().getRaw());
+            }
 
         //Since the command interpreter is no longer executed within the message interpreter, exception handling needs to happen here too
         try{

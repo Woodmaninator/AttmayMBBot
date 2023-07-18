@@ -28,7 +28,7 @@ public class AddQuoteCommand implements ICommand {
         //This is a command that you need to be authorized for in order to perform it. Luckily Past-Woodmaninator built a class for this very thing
         if(new AdvancedBotUserAuthorization(this.config).checkIfUserIsAuthorized(sender)){
             //This code gets executed if the user is authorized
-            if(!args.containsKey("author") || !args.containsKey("year") || !args.containsKey("quote")) {
+            if(args.containsKey("author") && args.containsKey("year") && args.containsKey("quote")) {
                 //get the quote properties
                 Date nowDate = new Date();
                 String quoteAuthorName = args.get("author");

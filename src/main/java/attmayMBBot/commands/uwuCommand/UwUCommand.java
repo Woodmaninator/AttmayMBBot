@@ -25,7 +25,7 @@ public class UwUCommand implements ICommand {
         else {
             //Get the last message from that channel (excluding the one that is the command)
             //I am not too sure that this will work, but we can hope
-            Message lastMessage = channel.getMessagesBefore(channel.getLastMessage().block().getId()).blockFirst();
+            Message lastMessage = channel.getLastMessage().block();
             if (lastMessage != null)
                 normalMessage = lastMessage.getContent();
             else {
