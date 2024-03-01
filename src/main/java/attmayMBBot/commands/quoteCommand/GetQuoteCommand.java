@@ -8,7 +8,7 @@ import attmayMBBot.functionalities.quoteManagement.QuoteIDManager;
 import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
-import javafx.util.Pair;
+import attmayMBBot.util.Pair;
 
 import java.util.List;
 import java.util.Map;

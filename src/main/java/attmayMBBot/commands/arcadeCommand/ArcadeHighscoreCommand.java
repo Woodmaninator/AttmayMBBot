@@ -12,7 +12,7 @@ import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.rest.util.Color;
-import javafx.util.Pair;
+import attmayMBBot.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

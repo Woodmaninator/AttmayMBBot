@@ -2,7 +2,7 @@ package attmayMBBot.functionalities.quoteManagement;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.util.Pair;
+import attmayMBBot.util.Pair;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
