@@ -1,0 +1,6 @@
+{
+  "xkcdChannelId": 1234,
+  "xkcdBaseUrl": "https://xkcd.com/",
+  "latestXkcd": 9200,
+  "interval": 1200000
+}
