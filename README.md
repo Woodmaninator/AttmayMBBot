@@ -20,6 +20,8 @@ Then you need to set environment variables for the bot to run. The following var
 * **AMBB_TOKEN**: This is the token of your Discord Bot. You can get that token and find more information about it on the [Discord Developer Page](https://discord.com/developers/applications).
 * **AMBB_SPOONACULAR_KEY**: This is the API-Key for the Spoonacular Food API. This API is exclusively used for the /dinnerpost command. You can get this by signing up on the [Spoonacular API Page](https://spoonacular.com/food-api). Note that with the free version of this API you can only send a limited number of requests per day.
 
+The bot keeps track of all the XKCD comics. It checks for a new comic in 20 minute intervals. In order for this to work, you need to configure the latest comic number in the AMBBXKCDConfig.json. Additionally, you have to specify the channel ID in which the comics should be posted.
+
 ## Commands
 This is a list of all the commands this bot provides.
 
@@ -151,6 +153,14 @@ This command returns an uwu-ified version of the text that is passed as an argum
 ### /combine [emoji1] [emoji2]
 This command lets you combine two emojis. It uses the Google gboard emoji kitchen combinations. There are about 26420 combinations available at the moment. This list has to be manually updated for future updates.
 Make sure to leave a space between the two emojis.
+
+
+### /xkcd
+This command posts a random XKCD comic.
+
+#### /xkcd [Comic Number]
+This command posts the XKCD comic with the specified number.
+
 
 ## Arcade Commands
 

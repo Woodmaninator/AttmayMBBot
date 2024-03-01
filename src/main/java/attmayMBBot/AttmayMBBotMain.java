@@ -72,7 +72,7 @@ public class AttmayMBBotMain {
         QuoteRankingManager quoteRankingManager = new QuoteRankingManager(quoteManager, quoteRankingResults);
 
         MessageInterpreter messageInterpreter = new MessageInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, quoteQuizManager, arcadeGameManager);
-        CommandInterpreter commandInterpreter = new CommandInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager, arcadeGameManager);
+        CommandInterpreter commandInterpreter = new CommandInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager, arcadeGameManager, xkcdUpdater);
         ReactionInterpreter reactionInterpreter = new ReactionInterpreter(config, quoteQuizManager, quoteRankingManager, arcadeGameManager);
 
         //Event gets fired when the bot receives a message (private or in a text channel)

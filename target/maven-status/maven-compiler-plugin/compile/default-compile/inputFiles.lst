@@ -4,6 +4,7 @@ E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\arcad
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\quoteManagement\QuoteAuthor.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\arcadeCommand\ArcadeGameReactionCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\arcadeCommand\triviaCommand\TriviaCommand.java
+E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\RenameQuoteAuthorCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\config\AMBBGoodnightConfig.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\config\AttmayMBBotConfig.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\QuoteRankingCommand.java
@@ -23,6 +24,7 @@ E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalitie
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\arcade\ArcadeUser.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\quoteRanking\QuoteRankingInstance.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\IReactionCommand.java
+E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\EditQuoteCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\arcade\aline\BoardDeepCloner.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\util\EWordQueryMode.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\config\ArcadeConfig.java
@@ -50,11 +52,14 @@ E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalitie
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\util\WordObject.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\arcade\AArcadeGameInstance.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\arcadeCommand\ArcadeHighscoreCommand.java
+E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\RemoveQuoteAuthorCommand.java
+E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\AllAuthorsCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\emojiKitchenCommand\EmojiKitchenCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\quoteRanking\QuoteRankingManager.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\AllQuotesCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\quoteQuiz\QuoteQuizInstance.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\quoteRanking\QuoteRankingResults.java
+E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\RemoveQuoteAuthorAliasCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\arcade\aline\AlineGame.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\goodnightCommand\GoodnightCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\popupMessageHandling\PopupMessageHandler.java
@@ -63,7 +68,6 @@ E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quote
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\quoteRanking\QuoteRankingStats.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\messageInterpreters\messageTextInterpreters\GMMessageTextInterpreter.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\authorization\AdvancedBotUserAuthorization.java
-E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\commands\quoteCommand\FixQuoteCommand.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\functionalities\UwUifyer.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\util\EWordType.java
 E:\Projects\attmayMBBotRepo\AttmayMBBot\src\main\java\attmayMBBot\reactionInterpreters\ReactionInterpreter.java

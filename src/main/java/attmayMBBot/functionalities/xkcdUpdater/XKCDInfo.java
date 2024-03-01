@@ -1,19 +1,19 @@
 package attmayMBBot.functionalities.xkcdUpdater;
 
 public class XKCDInfo {
-    private Long number;
+    private Integer number;
     private String title;
     private String imageUrl;
     private String altText;
 
-    public XKCDInfo(Long number, String title, String imageUrl, String altText) {
+    public XKCDInfo(Integer number, String title, String imageUrl, String altText) {
         this.number = number;
         this.title = title;
         this.imageUrl = imageUrl;
         this.altText = altText;
     }
 
-    public Long getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
