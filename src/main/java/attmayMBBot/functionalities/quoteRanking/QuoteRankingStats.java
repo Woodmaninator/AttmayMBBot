@@ -1,7 +1,7 @@
 package attmayMBBot.functionalities.quoteRanking;
 
 import attmayMBBot.functionalities.quoteManagement.Quote;
-import javafx.util.Pair;
+import attmayMBBot.util.Pair;
 
 public class QuoteRankingStats {
     private int wins;

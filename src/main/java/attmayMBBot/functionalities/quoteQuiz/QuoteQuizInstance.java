@@ -10,7 +10,7 @@ import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
-import javafx.util.Pair;
+import attmayMBBot.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Date;

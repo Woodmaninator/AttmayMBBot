@@ -10,10 +10,12 @@ import attmayMBBot.functionalities.quoteManagement.QuoteManager;
 import attmayMBBot.functionalities.quoteQuiz.QuoteQuizManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingManager;
 import attmayMBBot.functionalities.quoteRanking.QuoteRankingResults;
+import attmayMBBot.functionalities.xkcdUpdater.XKCDUpdater;
 import attmayMBBot.messageInterpreters.CommandInterpreter;
 import attmayMBBot.messageInterpreters.MessageInterpreter;
 import attmayMBBot.reactionInterpreters.ReactionInterpreter;
 import com.google.gson.Gson;
+import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent;
@@ -52,13 +54,16 @@ public class AttmayMBBotMain {
             EmojiCombinationHandler emojiCombinationHandler = new Gson().fromJson(reader, EmojiCombinationHandler.class);
             EmojiKitchenHandler.setEmojiCombinationHandler(emojiCombinationHandler);
 
-            startBot(config, quoteManager, quoteRankingResults, arcadeManager);
+            reader = new FileReader("AMBBXKCDConfig.json");
+            XKCDUpdater xkcdUpdater = new Gson().fromJson(reader, XKCDUpdater.class);
+
+            startBot(config, quoteManager, quoteRankingResults, arcadeManager, xkcdUpdater);
         } catch(Exception ex){
             System.out.println("Something went terribly wrong when trying to read the config/start up the bot. You should get that fixed asap.");
             ex.printStackTrace();
         }
     }
-    public static void startBot(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteRankingResults quoteRankingResults, ArcadeManager arcadeManager){
+    public static void startBot(AttmayMBBotConfig config, QuoteManager quoteManager, QuoteRankingResults quoteRankingResults, ArcadeManager arcadeManager, XKCDUpdater xkcdUpdater){
         final DiscordClient client = DiscordClient.create(config.getToken());
         final GatewayDiscordClient gateway = client.login().block();
 
@@ -67,7 +72,7 @@ public class AttmayMBBotMain {
         QuoteRankingManager quoteRankingManager = new QuoteRankingManager(quoteManager, quoteRankingResults);
 
         MessageInterpreter messageInterpreter = new MessageInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, quoteQuizManager, arcadeGameManager);
-        CommandInterpreter commandInterpreter = new CommandInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager, arcadeGameManager);
+        CommandInterpreter commandInterpreter = new CommandInterpreter(gateway, config, quoteManager, quoteRankingManager, quoteRankingResults, arcadeManager, new QuoteIDManager(quoteManager.getQuoteAuthors()), quoteQuizManager, arcadeGameManager, xkcdUpdater);
         ReactionInterpreter reactionInterpreter = new ReactionInterpreter(config, quoteQuizManager, quoteRankingManager, arcadeGameManager);
 
         //Event gets fired when the bot receives a message (private or in a text channel)
@@ -113,6 +118,11 @@ public class AttmayMBBotMain {
 
         //Start the update loop for the arcade manager
         arcadeGameManager.startUpdateLoop();
+
+        //Start the update loop for the xkcd updater
+        Long xkcdChannelId = xkcdUpdater.getXkcdChannelId();
+        MessageChannel xkcdChannel = gateway.getChannelById(Snowflake.of(xkcdChannelId)).ofType(MessageChannel.class).block();
+        xkcdUpdater.startUpdateLoop(xkcdChannel);
 
         gateway.onDisconnect().block();
     }

@@ -1,0 +1,13 @@
+{
+  "name": "xkcd",
+  "type": 1,
+  "description" : "Returns a random XKCD or an XKCD with the specified number.",
+  "options": [
+    {
+      "name": "number",
+      "description": "The number of the XKCD you want to have",
+      "type": 4,
+      "required": false
+    }
+  ]
+}
