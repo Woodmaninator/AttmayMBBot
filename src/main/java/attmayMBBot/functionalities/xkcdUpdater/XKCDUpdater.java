@@ -39,7 +39,9 @@ public class XKCDUpdater {
                     }
 
                     Thread.sleep(interval);
-                } catch (InterruptedException e) {
+                } catch (Throwable e) { //This should catch all exceptions, so that the update loop never stops
+                    System.out.println("Error in XKCDUpdater\n:");
+                    System.out.println(e.getMessage() + "\n");
                     e.printStackTrace();
                 }
             }
